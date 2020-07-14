@@ -32,9 +32,9 @@ module.exports = {
       },
     ],
   },
-  //   plugins: [
-  //     new HtmlWebpackPlugin({
-  //       template: "src/app.html",
-  //     }),
-  //   ],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "client/views/index.html",
+    }),
+  ],
 };
