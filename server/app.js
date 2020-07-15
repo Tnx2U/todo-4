@@ -8,8 +8,7 @@ var indexRouter = require("./routes/index");
 var app = express();
 
 require("dotenv").config();
-
-app.set("views", path.join(__dirname, "../client/views"));
+app.set("views", path.join(__dirname, "../client/public"));
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "html");
 
