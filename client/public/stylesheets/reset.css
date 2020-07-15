@@ -1,0 +1,56 @@
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+ul,
+body,
+td,
+th,
+tr,
+span,
+label,
+fieldset,
+button {
+  margin: 0;
+  padding: 0;
+}
+a,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+strong,
+label,
+div,
+button {
+  font-family: dotum, "돋음", sans-serif;
+  color: #444;
+  font-size: 14px;
+}
+form,
+fieldset {
+  border: 0;
+}
+button {
+  background-color: #fff;
+  border: 0;
+}
+table {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+ul {
+  list-style: none;
+}
+em {
+  font-style: normal;
+}
