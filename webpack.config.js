@@ -1,15 +1,19 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: "./server/app.js",
+  entry: "./client/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
   },
   node: {
     fs: "empty",
+  },
+  devServer: {
+    overlay: true,
+    stats: "errors-only",
+    contentBase: path.resolve(__dirname, "client/public"),
   },
   module: {
     rules: [
@@ -30,11 +34,11 @@ module.exports = {
           name: "[name].[ext]?[hash]",
         },
       },
+      {
+        test: /\.html$/,
+        loader: "html-loader",
+      },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "client/views/index.html",
-    }),
-  ],
+  plugins: [],
 };
