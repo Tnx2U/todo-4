@@ -22,7 +22,7 @@ function query(query) {
       if (err) throw err;
       connection.query(query, function (error, results) {
         connection.release();
-        if (error) throw error;
+        if (error) reject(error);
         resolve(results);
       });
     });

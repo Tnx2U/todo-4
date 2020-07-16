@@ -1,8 +1,13 @@
 import excute from "./excute";
-import { getAllCard, getAllColumn } from "./query";
+import {
+  getInitialData,
+  getAllCard,
+  getAllColumn,
+  getAllColumnOrder,
+} from "./query";
 
 function queryInitialData() {
-  return excute(getAllCard + getAllColumn);
+  return excute(getInitialData);
 }
 
 export { queryInitialData };
