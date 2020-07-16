@@ -3,12 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/stylesheets/index.css" />
+    <link rel="stylesheet" href="/public/stylesheets/reset.css" />
     <title>Document</title>
   </head>
   <body>
     <div class="wrapper">
       <div class="header"></div>
-      <div class="column"></div>
+      <div class="content">
+        <div class="column_wrap">
+          <div class="column">
+            <div class="column_header">
+              <button class="btn_more">...</button>
+              <button class="btn_add">+</button>
+              <span class="num_card">0</span>
+              <h3 class="title_column">To do</h3>
+              <div class="column_cards"></div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="column_header">
+              <button class="btn_more">...</button>
+              <button class="btn_add">+</button>
+              <span class="num_card">0</span>
+              <h3 class="title_column">To do</h3>
+            </div>
+            <div class="column_cards"></div>
+          </div>
+          <div class="column">
+            <div class="column_header">
+              <button class="btn_more">...</button>
+              <button class="btn_add">+</button>
+              <span class="num_card">0</span>
+              <h3 class="title_column">To do</h3>
+              <div class="column_cards"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script type="module" src="/index.js"></script>
   </body>
