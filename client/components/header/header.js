@@ -11,13 +11,9 @@ export default class Header
   }
 
   render() {
-    this.parentDom.innerHTML = `<div class="headerContainer">
-        <div class="logo">
-            <span class="span-logo">TODO 서비스</span>
-        </div>
-        <div class="menuBtnDiv">
-            <button class="btn-menu" onclick="">menu</button>
-        </div>
-      </div>`;
+    this.parentDom.innerHTML = `<div class="header_container">
+    <button class="btn_menu" onclick="">menu</button>
+      <h1 class="header_title">TODO 서비스</h1>
+    </div>`;
   }
 }

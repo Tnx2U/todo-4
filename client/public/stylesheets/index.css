@@ -6,11 +6,11 @@ body,
 }
 
 .header {
-  height: 10%;
+  height: 5%;
 }
 
 .content {
-  height: 90%;
+  height: 95%;
   width: 100%;
 }
 
@@ -42,4 +42,31 @@ body,
 }
 .title_column {
   display: inline;
+}
+
+.header_container {
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  position: relative;
+}
+
+.header_title {
+  color: #fff;
+  font-size: 30px;
+  height: 30px;
+  margin-left: 15px;
+}
+
+.btn_menu {
+  position: absolute;
+  right: 50px;
+  font-size: 30px;
+  height: 30px;
+  background-color: #000;
+  color: #fff;
+  width: 150px;
+  height: 100%;
 }
