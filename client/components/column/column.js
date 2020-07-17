@@ -11,8 +11,12 @@ export default class Column {
   render() {
     this.parentDom.innerHTML += `<div class="column">
         <div class="column_header">
-            <button class="btn_more">...</button>
-            <button class="btn_add">+</button>
+            <button class="btn float_right">
+              <img src="/public/images/more.svg" />
+            </button>
+            <button class="btn float_right">
+              <img src="/public/images/add.svg" />
+            </button>
             <span class="num_card">${this.data.cards.length}</span>
             <h3 class="title_column">${this.data.title}</h3>
         </div>

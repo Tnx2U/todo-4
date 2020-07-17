@@ -12,7 +12,9 @@ export default class Card {
             <div class="card_note">
                 <span>${this.data.note}</span>
             </div>
-            <button class="btn_delete">x</button>
+            <button class="btn">
+              <img src="/public/images/close.svg" />
+            </button>
         </div>
         <div class="card_bottom">
             <span class="add_by">Added by</span>
