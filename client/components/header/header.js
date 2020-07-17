@@ -1,11 +1,8 @@
 // const headerDoc = document.querySelector(".header");
 // import Component from "../share/component";
 
-export default class Header
-// extends Component
-{
+export default class Header {
   constructor(parentDom) {
-    // super(parentDom);
     this.parentDom = parentDom;
     this.render();
   }
