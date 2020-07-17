@@ -1,0 +1,46 @@
+.card_wrap {
+  border-radius: 10px;
+  border: 2px solid;
+  border-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+  padding: 7px;
+  margin: 10px;
+  background-color: white;
+  position: relative;
+}
+
+.card_content {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+}
+
+.card_note {
+  margin: 7px;
+}
+
+.img_card {
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+}
+
+.btn_delete {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  margin: 10px;
+}
+
+.card_bottom {
+  margin-left: 40px;
+}
+
+.add_by {
+  color: #586069;
+}
+
+.span_writer {
+  color: #0366d6;
+}
