@@ -1,0 +1,35 @@
+.activity_card {
+  border: 1px solid;
+  border-color: antiquewhite;
+  display: flex;
+  flex-direction: row;
+}
+
+.activity_card div {
+  margin: 3px;
+}
+
+.img_user {
+  width: 30px;
+  height: 30px;
+}
+
+.message {
+  display: flex;
+  flex-direction: row;
+}
+
+.message div {
+  width: fit-content;
+}
+
+.update_time {
+  color: #586069;
+  font-weight: 500;
+}
+
+.act_user,
+.act_cardId {
+  color: #0366d6;
+  font-weight: 500;
+}
