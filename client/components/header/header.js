@@ -1,0 +1,19 @@
+// const headerDoc = document.querySelector(".header");
+// import Component from "../share/component";
+
+export default class Header
+// extends Component
+{
+  constructor(parentDom) {
+    // super(parentDom);
+    this.parentDom = parentDom;
+    this.render();
+  }
+
+  render() {
+    this.parentDom.innerHTML = `<div class="header_container">
+    <button class="btn_menu" onclick="">menu</button>
+      <h1 class="header_title">TODO 서비스</h1>
+    </div>`;
+  }
+}

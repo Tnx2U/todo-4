@@ -3,12 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/stylesheets/index.css" />
+    <link rel="stylesheet" href="../components/card/card.css" />
+    <link rel="stylesheet" href="/public/stylesheets/reset.css" />
     <title>Document</title>
   </head>
   <body>
     <div class="wrapper">
       <div class="header"></div>
-      <div class="column"></div>
+      <div class="content">
+        <div class="column_wrap">
+          <!--
+          <div class="column">
+            <div class="column_header">
+              <span class="num_card">0</span>
+              <h3 class="title_column">To do</h3>
+              <button class="btn_add">+</button>
+              <button class="btn_more">...</button>
+            </div>
+            <div class="column_cards"></div>
+          </div> -->
+        </div>
+      </div>
+      <div class="menu_wrap">
+        <div class="menu_header vertical_center">
+          <button class="btn">
+            <img src="/public/images/menu.svg" />
+          </button>
+          <h3 class="menu_title">Menu</h3>
+          <button class="btn flex_right">
+            <img src="/public/images/close.svg" />
+          </button>
+        </div>
+        <div class="activity_wrap">
+          <div class="activity_header vertical_center">
+            <img src="/public/images/noti.svg" />
+            <h3 class="menu_title">Activity</h3>
+          </div>
+          <ul class="activity_content">
+            <div class="activity_card">
+              <div class="activity_profile"></div>
+              <div class="activity_content">
+                <p>@yuda1124 deleted the column kk.</p>
+                <span>6 horu ago</span>
+              </div>
+            </div>
+          </ul>
+        </div>
+      </div>
     </div>
+    <script type="module" src="/index.js"></script>
   </body>
 </html>
