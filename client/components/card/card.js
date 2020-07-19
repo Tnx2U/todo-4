@@ -1,12 +1,11 @@
 import DragAndDrop from "../../controllers/dragAndDrop.js";
+import Data from "../../controllers/data.js";
 
 export default class Card {
-  constructor(element, cardInfo, cardIndex) {
+  constructor(element, colId, cardId) {
     this.element = element;
-    this.note = cardInfo.note;
-    this.writer = cardInfo.writer;
-    this.cardId = cardInfo.cardId;
-    this.cardIndex = cardIndex;
+    this.cardId = cardId;
+    this.colId = colId;
     this.render();
   }
 
@@ -23,20 +22,22 @@ export default class Card {
   }
 
   render() {
+    const cardInfo = Data.getCardDataById(this.colId, this.cardId);
+
     this.element.insertAdjacentHTML(
       "beforeend",
       ` <div class="card_content">
             <img class="img_card"/>
             <div class="card_note">
-                <span>${this.note}</span>
+                <span>${cardInfo.note}</span>
             </div>
-            <button class="btn" id="btn_${this.cardIndex}">
+            <button class="btn" id="btn_${this.cardId}">
               <img src="/public/images/close.svg" />
             </button>
         </div>
         <div class="card_bottom">
             <span class="add_by">Added by</span>
-            <span class="span_writer">${this.writer}</span>
+            <span class="span_writer">${cardInfo.writer}</span>
         </div>
       `
     );

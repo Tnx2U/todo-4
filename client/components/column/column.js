@@ -1,16 +1,16 @@
 // import Component from "../share/component";
 import Card from "../card/card.js";
+import Data from "../../controllers/data.js";
 
 export default class Column {
-  constructor(element, columnInfo) {
+  constructor(element, colId) {
     this.element = element;
-    this.colId = columnInfo.colId;
-    this.title = columnInfo.title;
-    this.cards = columnInfo.cards;
+    this.colId = colId;
     this.render();
   }
 
   renderColumInfo() {
+    const columnInfo = Data.getColumnDataById(this.colId);
     this.element.insertAdjacentHTML(
       "beforeend",
       `
@@ -21,8 +21,8 @@ export default class Column {
             <button class="btn float_right">
               <img src="/public/images/add.svg" />
             </button>
-            <span class="num_card">${this.cards.length}</span>
-            <h3 class="title_column">${this.title}</h3>
+            <span class="num_card">${columnInfo.cards.length}</span>
+            <h3 class="title_column">${columnInfo.title}</h3>
         </div>
         <div class="column_cards"></div>
     `
@@ -30,7 +30,8 @@ export default class Column {
   }
 
   renderCards() {
-    this.cards.forEach((card, index) => {
+    const columnInfo = Data.getColumnDataById(this.colId);
+    columnInfo.cards.forEach((card) => {
       const cardWrapElement = this.element.querySelector(".column_cards");
       cardWrapElement.insertAdjacentHTML(
         "beforeend",
@@ -38,7 +39,7 @@ export default class Column {
         </div>`
       );
       const cardElement = this.element.querySelector(`#card_${card.cardId}`);
-      new Card(cardElement, card, index);
+      new Card(cardElement, this.colId, card.cardId);
     });
   }
 
