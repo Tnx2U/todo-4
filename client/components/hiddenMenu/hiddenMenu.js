@@ -26,7 +26,6 @@ export default class HiddenMenu {
     <ul class="activity_content">
     </ul>
     `;
-    console.log("dummyactData : ", this.data);
     for (let index = 0; index < this.data.length; index++) {
       new Activity(
         this.parentDom.querySelector(".activity_content"),

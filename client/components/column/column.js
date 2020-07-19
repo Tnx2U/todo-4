@@ -2,14 +2,18 @@
 import Card from "../card/card.js";
 
 export default class Column {
-  constructor(parentDom, data) {
-    this.parentDom = parentDom;
-    this.data = data;
+  constructor(element, columnInfo) {
+    this.element = element;
+    this.colId = columnInfo.colId;
+    this.title = columnInfo.title;
+    this.cards = columnInfo.cards;
     this.render();
   }
 
-  render() {
-    this.parentDom.innerHTML += `<div class="column">
+  renderColumInfo() {
+    this.element.insertAdjacentHTML(
+      "beforeend",
+      `
         <div class="column_header">
             <button class="btn float_right">
               <img src="/public/images/more.svg" />
@@ -17,21 +21,46 @@ export default class Column {
             <button class="btn float_right">
               <img src="/public/images/add.svg" />
             </button>
-            <span class="num_card">${this.data.cards.length}</span>
-            <h3 class="title_column">${this.data.title}</h3>
+            <span class="num_card">${this.cards.length}</span>
+            <h3 class="title_column">${this.title}</h3>
         </div>
         <div class="column_cards"></div>
-    </div>`;
+    `
+    );
+  }
 
-    //to-do : parentDom의 childeNodes수가 경우에 따라 유동적으로 변하므로 코드 리펙토링이 필요
-    console.log("parentDoms child in col: ", this.parentDom.childNodes);
-    const cardAreaDom = this.parentDom.childNodes[
-      this.data.colId - 1
-    ].querySelector(".column_cards");
+  renderCards() {
+    this.cards.forEach((card, index) => {
+      const cardWrapElement = this.element.querySelector(".column_cards");
+      cardWrapElement.insertAdjacentHTML(
+        "beforeend",
+        `<div class="card_wrap" id="card_${card.cardId}">
+        </div>`
+      );
+      const cardElement = this.element.querySelector(`#card_${card.cardId}`);
+      new Card(cardElement, card, index);
+    });
+  }
 
-    for (let index = 0; index < this.data.cards.length; index++) {
-      const cardData = this.data.cards[index];
-      new Card(cardAreaDom, cardData);
+  render() {
+    this.renderColumInfo();
+    this.renderCards();
+  }
+
+  update() {
+    this.remove();
+    this.render();
+  }
+
+  setCards(cards) {
+    this.cards = cards;
+  }
+
+  remove() {
+    var child = this.element.lastElementChild;
+    while (child) {
+      this.element.removeChild(child);
+      child = e.lastElementChild;
     }
   }
 }

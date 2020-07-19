@@ -45,9 +45,15 @@ const dummyActData = [
 
 function render(data) {
   new Header(document.querySelector(".header"));
-  for (let index = 0; index < data.length; index++) {
-    new Column(document.querySelector(".column_wrap"), data[index]);
-  }
+  const columnWrapElement = document.querySelector(".column_wrap");
+  data.forEach((column) => {
+    columnWrapElement.insertAdjacentHTML(
+      "beforeend",
+      `<div class="column" id="column${column.colId}"></div>`
+    );
+    const columnElement = document.querySelector(`#column${column.colId}`);
+    new Column(columnElement, column);
+  });
 
   new HiddenMenu(document.querySelector(".menu_wrap"), dummyActData);
 }
