@@ -3,6 +3,8 @@ import Card from "../components/card/card.js";
 export default class DragAndDrop {
   static draggedCard = null;
   static enteredCard = null;
+  static relativeTopInCard = 0;
+  static relativeLeftInCard = 0;
 
   static setDraggedCard(e, card) {
     this.draggedCard = card;
@@ -12,8 +14,10 @@ export default class DragAndDrop {
 
   static onMouseMove = (e) => {
     e.preventDefault();
-    document.querySelector(".ondrag").style.left = e.clientX - 17 + "px";
-    document.querySelector(".ondrag").style.top = e.clientY - 17 + "px";
+    document.querySelector(".ondrag").style.left =
+      e.clientX - 17 - this.relativeLeftInCard + "px";
+    document.querySelector(".ondrag").style.top =
+      e.clientY - 17 - this.relativeTopInCard + "px";
   };
 
   static setEventListener() {
@@ -36,7 +40,10 @@ export default class DragAndDrop {
   static setCaptureImage(e) {
     const cardElement = document.querySelector(".ondrag");
     cardElement.innerHTML = this.draggedCard.getInnerHtml();
-    document.querySelector(".ondrag").style.left = e.clientX - 17 + "px";
-    document.querySelector(".ondrag").style.top = e.clientY - 17 + "px";
+    const bounds = this.draggedCard.element.getBoundingClientRect();
+    this.relativeLeftInCard = e.clientX - bounds.left;
+    this.relativeTopInCard = e.clientY - bounds.top;
+    document.querySelector(".ondrag").style.left = bounds.left - 17 + "px";
+    document.querySelector(".ondrag").style.top = bounds.top - 17 + "px";
   }
 }
