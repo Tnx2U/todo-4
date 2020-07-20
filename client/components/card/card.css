@@ -44,3 +44,9 @@
 .span_writer {
   color: #0366d6;
 }
+
+.ondrag {
+  position: absolute;
+  width: 333px;
+  pointer-events: none;
+}

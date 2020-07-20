@@ -6,24 +6,35 @@ export default class Card {
     this.element = element;
     this.cardId = cardId;
     this.colId = colId;
+    this.setMouseDownEvent();
     this.render();
   }
 
-  dragStart() {
-    DragAndDrop.setDraggedCard(this);
+  dragStart(e) {
+    DragAndDrop.setDraggedCard(e, this);
   }
 
   setMouseDownEvent() {
-    this.element.addEventListener("mousedown", () => this.dragStart());
+    this.element.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      this.dragStart(e);
+    });
   }
 
   setMouseEnterEvent() {
     this.element.addEventListener("mouseenter", () => {});
   }
 
-  render() {
-    const cardInfo = Data.getCardDataById(this.colId, this.cardId);
+  getCardInfo() {
+    return Data.getCardDataById(this.colId, this.cardId);
+  }
 
+  getInnerHtml() {
+    return this.element.innerHTML;
+  }
+
+  render() {
+    const cardInfo = this.getCardInfo();
     this.element.insertAdjacentHTML(
       "beforeend",
       ` <div class="card_content">

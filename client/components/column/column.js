@@ -31,8 +31,8 @@ export default class Column {
 
   renderCards() {
     const columnInfo = Data.getColumnDataById(this.colId);
+    const cardWrapElement = this.element.querySelector(".column_cards");
     columnInfo.cards.forEach((card) => {
-      const cardWrapElement = this.element.querySelector(".column_cards");
       cardWrapElement.insertAdjacentHTML(
         "beforeend",
         `<div class="card_wrap" id="card_${card.cardId}">
