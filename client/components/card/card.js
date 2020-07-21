@@ -2,27 +2,76 @@ import DragAndDrop from "../../controllers/dragAndDrop.js";
 import Data from "../../controllers/data.js";
 
 export default class Card {
-  constructor(element, colId, cardId) {
+  constructor(element, colId, cardId, orderInColumn) {
     this.element = element;
     this.cardId = cardId;
     this.colId = colId;
-    this.setMouseDownEvent();
+    this.orderInColumn = orderInColumn;
     this.render();
+    this.setEventListener();
   }
 
-  dragStart(e) {
-    DragAndDrop.setDraggedCard(e, this);
+  setEventListener() {
+    this.setMouseDownEvent();
+    this.setMouseEnterEvent();
+    this.setMouseLeaveEvent();
+    this.setMouseMoveEvent();
   }
+
+  removeEventListener() {
+    this.removeMouseEnterEvent();
+    this.element.removeEventListener("mousedown", this.dragStart);
+    this.element.removeEventListener("mouseleave", this.onMouseLeave);
+    this.removeMouseMoveEvent();
+  }
+
+  moveStart = (e) => {
+    if (DragAndDrop.isDragging() && DragAndDrop.isEntered()) {
+      DragAndDrop.updateDummyCardDirection(e, this.element);
+    }
+  };
+
+  setMouseMoveEvent() {
+    this.element.addEventListener("mousemove", this.moveStart);
+  }
+
+  removeMouseMoveEvent() {
+    this.element.removeEventListener("mousemove", this.moveStart);
+  }
+
+  dragStart = (e) => {
+    DragAndDrop.setDraggedCard(e, this);
+  };
 
   setMouseDownEvent() {
-    this.element.addEventListener("mousedown", (e) => {
-      e.preventDefault();
-      this.dragStart(e);
-    });
+    this.element.addEventListener("mousedown", this.dragStart);
   }
 
+  onMouseEnter = (e) => {
+    e.preventDefault();
+    if (DragAndDrop.isDragging() && !DragAndDrop.isEntered()) {
+      DragAndDrop.onEnterOtherCard(e, this);
+      this.removeMouseEnterEvent();
+    }
+  };
+
   setMouseEnterEvent() {
-    this.element.addEventListener("mouseenter", () => {});
+    this.element.addEventListener("mouseenter", this.onMouseEnter);
+  }
+
+  removeMouseEnterEvent() {
+    this.element.removeEventListener("mouseenter", this.onMouseEnter);
+  }
+
+  onMouseLeave = (e) => {
+    if (DragAndDrop.isDragging() && DragAndDrop.isEntered()) {
+      DragAndDrop.clearEnteredCard();
+      this.setMouseEnterEvent();
+    }
+  };
+
+  setMouseLeaveEvent() {
+    this.element.addEventListener("mouseleave", this.onMouseLeave);
   }
 
   getCardInfo() {
@@ -60,10 +109,11 @@ export default class Card {
   }
 
   remove() {
+    this.removeEventListener();
     var child = this.element.lastElementChild;
     while (child) {
       this.element.removeChild(child);
-      child = e.lastElementChild;
+      child = this.element.lastElementChild;
     }
   }
 }

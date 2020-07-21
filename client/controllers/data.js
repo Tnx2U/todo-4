@@ -78,4 +78,19 @@ export default class Data {
   static getActivityData() {
     return this.activityData;
   }
+
+  static pushCardByColIdAndCardOrder(colId, order, card) {
+    const columnIndex = this.columnData.findIndex(
+      (column) => column.colId === colId
+    );
+    this.columnData[columnIndex].cards.splice(order, 0, card);
+    console.log(this.columnData);
+  }
+  static popCardByColIdAndCardOrder(colId, order, card) {
+    const columnIndex = this.columnData.findIndex(
+      (column) => column.colId === colId
+    );
+    this.columnData[columnIndex].cards.splice(order, 1);
+    console.log(this.columnData);
+  }
 }

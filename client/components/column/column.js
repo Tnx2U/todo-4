@@ -1,12 +1,23 @@
 // import Component from "../share/component";
 import Card from "../card/card.js";
 import Data from "../../controllers/data.js";
+import DragAndDrop from "../../controllers/dragAndDrop.js";
 
 export default class Column {
   constructor(element, colId) {
     this.element = element;
     this.colId = colId;
+    this.cards = [];
     this.render();
+    this.setMouseEnterEvent();
+  }
+
+  onMouseEnter = (e) => {
+    DragAndDrop.isDragging() && DragAndDrop.onEnterColumn(e, this);
+  };
+
+  setMouseEnterEvent() {
+    this.element.addEventListener("mouseenter", this.onMouseEnter);
   }
 
   renderColumInfo() {
@@ -32,14 +43,16 @@ export default class Column {
   renderCards() {
     const columnInfo = Data.getColumnDataById(this.colId);
     const cardWrapElement = this.element.querySelector(".column_cards");
-    columnInfo.cards.forEach((card) => {
+    columnInfo.cards.forEach((card, index) => {
       cardWrapElement.insertAdjacentHTML(
         "beforeend",
-        `<div class="card_wrap" id="card_${card.cardId}">
+        `<div class="card_wrap" id="card_${this.colId}_${index}">
         </div>`
       );
-      const cardElement = this.element.querySelector(`#card_${card.cardId}`);
-      new Card(cardElement, this.colId, card.cardId);
+      const cardElement = this.element.querySelector(
+        `#card_${this.colId}_${index}`
+      );
+      this.cards.push(new Card(cardElement, this.colId, card.cardId, index));
     });
   }
 
@@ -58,10 +71,13 @@ export default class Column {
   }
 
   remove() {
+    this.cards.forEach((card) => {
+      card.remove();
+    });
     var child = this.element.lastElementChild;
     while (child) {
       this.element.removeChild(child);
-      child = e.lastElementChild;
+      child = this.element.lastElementChild;
     }
   }
 }
