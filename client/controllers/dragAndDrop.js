@@ -119,6 +119,7 @@ export default class DragAndDrop {
     e.preventDefault();
     window.removeEventListener("mousemove", this.onMouseMove);
     window.removeEventListener("mouseup", this.onMouseUp);
+    this.removeClassToDummyCard();
     this.draggedCard = null;
     this.enteredCard = null;
     this.enteredColumn = null;
