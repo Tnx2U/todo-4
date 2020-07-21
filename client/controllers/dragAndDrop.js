@@ -8,14 +8,31 @@ export default class DragAndDrop {
   static relativeLeftInCard = 0;
   static dummyCardDirection = true;
 
-  static updateDummyCardDirection(e, element) {
+  static updateDummyCardDirection(e, card) {
+    const element = card.element;
     if (this.isLocatedUp(e, element) !== this.dummyCardDirection) {
       this.popCardInfo();
-      this.setDummyCardDirection(e);
-      //      this.pushCardInfo();
+      this.setDummyCardDirection(e, element);
+      this.pushCardInfo();
       this.enteredColumn.update();
+      this.addClassToDummyCard(card);
     }
   }
+
+  static addClassToDummyCard(card) {
+    const dummyCardElement = document.querySelector(
+      `#card_${card.colId}_${
+        this.dummyCardDirection ? card.orderInColumn : card.orderInColumn + 1
+      }`
+    );
+    dummyCardElement.classList.add("dummy");
+  }
+
+  static removeClassToDummyCard() {
+    const dummyCardElement = document.querySelector(".dummy");
+    dummyCardElement.classList.remove("dummy");
+  }
+
   static onEnterColumn(e, column) {
     this.enteredColumn = column;
   }
@@ -34,6 +51,7 @@ export default class DragAndDrop {
   static clearEnteredCard() {
     this.popCardInfo();
     this.enteredCard = null;
+    this.removeClassToDummyCard();
     this.enteredColumn.update();
   }
 
@@ -58,15 +76,16 @@ export default class DragAndDrop {
 
   static onEnterOtherCard(e, card) {
     this.setEnteredCard(card);
-    this.setDummyCardDirection(e);
+    this.setDummyCardDirection(e, card.element);
     this.pushCardInfo();
     this.enteredColumn.update();
+    this.addClassToDummyCard(card);
   }
   static setEnteredCard(card) {
     this.enteredCard = card;
   }
-  static setDummyCardDirection(e) {
-    this.dummyCardDirection = this.isLocatedUp(e, this.enteredCard.element);
+  static setDummyCardDirection(e, cardElement) {
+    this.dummyCardDirection = this.isLocatedUp(e, cardElement);
   }
   static isLocatedUp(e, element) {
     const bounds = element.getBoundingClientRect();
@@ -82,7 +101,6 @@ export default class DragAndDrop {
   }
 
   static onMouseMove = (e) => {
-    e.preventDefault();
     document.querySelector(".ondrag").style.left =
       e.clientX - 17 - this.relativeLeftInCard + "px";
     document.querySelector(".ondrag").style.top =

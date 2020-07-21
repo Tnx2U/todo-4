@@ -26,8 +26,12 @@ export default class Card {
   }
 
   moveStart = (e) => {
-    if (DragAndDrop.isDragging() && DragAndDrop.isEntered()) {
-      DragAndDrop.updateDummyCardDirection(e, this.element);
+    if (
+      DragAndDrop.isDragging() &&
+      DragAndDrop.isEntered() &&
+      !this.element.classList.contains("dummy")
+    ) {
+      DragAndDrop.updateDummyCardDirection(e, this);
     }
   };
 
