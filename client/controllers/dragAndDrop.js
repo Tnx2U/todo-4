@@ -32,7 +32,9 @@ export default class DragAndDrop {
     const dummyCardElement = document.querySelector(".dummy");
     dummyCardElement.classList.remove("dummy");
   }
-
+  static isEnteredColumn() {
+    return this.enteredCard !== null;
+  }
   static onEnterColumn(e, column) {
     this.enteredColumn = column;
   }
@@ -41,7 +43,7 @@ export default class DragAndDrop {
     return this.draggedCard !== null;
   }
 
-  static isEntered() {
+  static isEnteredCard() {
     return this.enteredCard !== null;
   }
 
@@ -119,7 +121,7 @@ export default class DragAndDrop {
     e.preventDefault();
     window.removeEventListener("mousemove", this.onMouseMove);
     window.removeEventListener("mouseup", this.onMouseUp);
-    this.removeClassToDummyCard();
+    this.isEnteredColumn() && this.removeClassToDummyCard();
     this.draggedCard = null;
     this.enteredCard = null;
     this.enteredColumn = null;

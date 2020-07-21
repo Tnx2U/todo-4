@@ -28,7 +28,7 @@ export default class Card {
   moveStart = (e) => {
     if (
       DragAndDrop.isDragging() &&
-      DragAndDrop.isEntered() &&
+      DragAndDrop.isEnteredCard() &&
       !this.element.classList.contains("dummy")
     ) {
       DragAndDrop.updateDummyCardDirection(e, this);
@@ -53,7 +53,7 @@ export default class Card {
 
   onMouseEnter = (e) => {
     e.preventDefault();
-    if (DragAndDrop.isDragging() && !DragAndDrop.isEntered()) {
+    if (DragAndDrop.isDragging() && !DragAndDrop.isEnteredCard()) {
       DragAndDrop.onEnterOtherCard(e, this);
       this.removeMouseEnterEvent();
     }
@@ -68,7 +68,7 @@ export default class Card {
   }
 
   onMouseLeave = (e) => {
-    if (DragAndDrop.isDragging() && DragAndDrop.isEntered()) {
+    if (DragAndDrop.isDragging() && DragAndDrop.isEnteredCard()) {
       DragAndDrop.clearEnteredCard();
       this.setMouseEnterEvent();
     }

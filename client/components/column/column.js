@@ -9,7 +9,12 @@ export default class Column {
     this.colId = colId;
     this.cards = [];
     this.render();
+    this.setEventListener();
+  }
+
+  setEventListener() {
     this.setMouseEnterEvent();
+    this.setMouseDownEvent();
   }
 
   onMouseEnter = (e) => {
@@ -18,6 +23,14 @@ export default class Column {
 
   setMouseEnterEvent() {
     this.element.addEventListener("mouseenter", this.onMouseEnter);
+  }
+
+  onMouseDown = (e) => {
+    DragAndDrop.onEnterColumn(e, this);
+  };
+
+  setMouseDownEvent() {
+    this.element.addEventListener("mousedown", this.onMouseDown);
   }
 
   renderColumInfo() {
