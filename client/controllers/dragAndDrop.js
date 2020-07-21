@@ -122,6 +122,7 @@ export default class DragAndDrop {
     window.removeEventListener("mousemove", this.onMouseMove);
     window.removeEventListener("mouseup", this.onMouseUp);
     this.isEnteredColumn() && this.removeClassToDummyCard();
+    this.toggleCaptureImageVisible();
     this.draggedCard = null;
     this.enteredCard = null;
     this.enteredColumn = null;
@@ -131,8 +132,22 @@ export default class DragAndDrop {
   }
 
   static setCaptureImage(e) {
+    this.toggleCaptureImageVisible();
+    this.setCaptureImageInfo();
+    this.setRelativePositionInCard(e);
+  }
+
+  static toggleCaptureImageVisible() {
+    const cardElement = document.querySelector(".ondrag");
+    cardElement.classList.toggle("hidden");
+  }
+
+  static setCaptureImageInfo() {
     const cardElement = document.querySelector(".ondrag");
     cardElement.innerHTML = this.draggedCard.getInnerHtml();
+  }
+
+  static setRelativePositionInCard(e) {
     const bounds = this.draggedCard.element.getBoundingClientRect();
     this.relativeLeftInCard = e.clientX - bounds.left;
     this.relativeTopInCard = e.clientY - bounds.top;
