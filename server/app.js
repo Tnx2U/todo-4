@@ -8,6 +8,7 @@ var indexRouter = require("./routes/index");
 var initializeRouter = require("./routes/initialize");
 var columnOrderRouter = require("./routes/column_order");
 var cardRouter = require("./routes/cards");
+var columnRouter = require("./routes/column");
 var app = express();
 
 require("dotenv").config();
@@ -23,6 +24,7 @@ app.use("/", indexRouter);
 app.use("/init", initializeRouter);
 app.use("/column_order", columnOrderRouter);
 app.use("/card", cardRouter);
+app.use("/column", columnRouter);
 app.use(express.static(path.join(__dirname, "../client")));
 
 // catch 404 and forward to error handler

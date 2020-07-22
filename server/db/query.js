@@ -110,6 +110,19 @@ const deleteCard = function (params) {
   return deleteCardQueryC;
 };
 
+const putColumn = function (params) {
+  let putColumnQuery = `
+  update todo.column
+  set column.title = ?
+  where id = ?;
+  `;
+  const putColumnQueryC = mysql.format(putColumnQuery, [
+    params.title,
+    params.columnId,
+  ]);
+  return putColumnQueryC;
+};
+
 export {
   getInitialData,
   getAllCard,
@@ -122,4 +135,5 @@ export {
   putCard,
   deleteCard,
   pullColumnOrder,
+  putColumn,
 };
