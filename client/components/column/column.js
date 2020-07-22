@@ -28,11 +28,11 @@ export default class Column {
 
   renderCards() {
     const columnInfo = Data.getColumnDataById(this.colId);
-    columnInfo.cards.forEach((card) => {
+    columnInfo.cards.forEach((card, order) => {
       const cardWrapElement = this.parentDom.querySelector(
-        `#column_${this.colId}`
+        `#column_${this.colId} .column_cards`
       );
-      new Card(cardWrapElement, this.colId, card.cardId);
+      new Card(cardWrapElement, this.colId, card.cardId, order);
     });
   }
 

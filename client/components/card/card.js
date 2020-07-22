@@ -9,21 +9,9 @@ export default class Card {
     this.render();
   }
 
-  dragStart() {
-    DragAndDrop.setDraggedCard(this);
-  }
-
-  setMouseDownEvent() {
-    this.element.addEventListener("mousedown", () => this.dragStart());
-  }
-
-  setMouseEnterEvent() {
-    this.element.addEventListener("mouseenter", () => {});
-  }
-
   render() {
     const cardInfo = Data.getCardDataById(this.colId, this.cardId);
-    this.parentDom.innerHTML += `<div class="card_wrap" id="card_${this.cardId}">
+    this.parentDom.innerHTML += `<div class="card_wrap" id="card_${this.colId}_${this.cardId}">
         <div class="card_content">
             <img class="img_card"/>
             <div class="card_note">
@@ -38,18 +26,5 @@ export default class Card {
             <span class="span_writer">${cardInfo.writer}</span>
         </div>
       `;
-  }
-
-  update() {
-    this.remove();
-    this.render();
-  }
-
-  remove() {
-    var child = this.element.lastElementChild;
-    while (child) {
-      this.element.removeChild(child);
-      child = e.lastElementChild;
-    }
   }
 }

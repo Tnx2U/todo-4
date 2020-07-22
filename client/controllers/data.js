@@ -1,5 +1,5 @@
 import getInitialData from "../apis/initialize.js";
-
+import { updateCardOrder } from "../apis/columnOrder.js";
 // activity 더미 데이터
 const dummyActData = [
   {
@@ -48,10 +48,40 @@ export default class Data {
     await getInitialData()
       .then((response) => response.json())
       .then((response) => {
-        console.log(response.data);
         this.setColumnData(response.data);
         this.setActivityData(dummyActData);
       });
+  }
+  //static async updateCardOrder(
+  static updateCardOrder(
+    fromColumnId,
+    toColumnId,
+    orderInFromColumn,
+    orderInToColumn,
+    cardId
+  ) {
+    // await updateCardOrder(
+    //   fromColumnId,
+    //   toColumnId,
+    //   orderInFromColumn,
+    //   orderInToColumn,
+    //   cardId
+    // )
+    //   .then((response) => response.json())
+    //   .then((response) => {
+    //     console.log(response.sucess);
+    //   });
+    const fromColumnOrder = this.getColumnOrderByColumId(fromColumnId);
+    const toColumnOrder = this.getColumnOrderByColumId(toColumnId);
+    const fromCardData = this.columnData[fromColumnOrder].cards.splice(
+      orderInFromColumn,
+      1
+    );
+    this.columnData[toColumnOrder].cards.splice(
+      orderInToColumn,
+      1,
+      fromCardData[0]
+    );
   }
 
   static setColumnData(columnData) {
@@ -78,5 +108,15 @@ export default class Data {
 
   static getActivityData() {
     return this.activityData;
+  }
+
+  static getOrderInColumnByCardId(colId, cardId) {
+    return this.getColumnDataById(colId).cards.findIndex(
+      (card) => card.cardId === cardId
+    );
+  }
+
+  static getColumnOrderByColumId(colId) {
+    return this.columnData.findIndex((column) => column.colId === colId);
   }
 }

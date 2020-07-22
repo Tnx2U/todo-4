@@ -1,3 +1,5 @@
+import Data from "./data.js";
+
 export default class DragAndDrop {
   static columnRootElement = null;
   static draggedCard = null;
@@ -72,7 +74,19 @@ export default class DragAndDrop {
         ? this.enteredCard
         : this.enteredCard.nextSibling
       : null;
-    this.enteredColumn.insertBefore(dummyCard, referenceNode);
+    const columnCards = this.enteredColumn.querySelector(".column_cards");
+    columnCards.insertBefore(dummyCard, referenceNode);
+  }
+
+  static insertDraggedCard() {
+    let referenceNode = this.isCardEntered()
+      ? this.dummyCardDirection
+        ? this.enteredCard
+        : this.enteredCard.nextSibling
+      : null;
+    const columnCards = this.enteredColumn.querySelector(".column_cards");
+    columnCards.insertBefore(this.draggedCard, referenceNode);
+    this.draggedCard.classList.remove("hidden");
   }
 
   static clearDummyCard() {
@@ -84,7 +98,10 @@ export default class DragAndDrop {
     this.columnRootElement.removeEventListener("mousemove", this.onMouseMove);
     this.columnRootElement.removeEventListener("mouseup", this.onMouseUp);
     this.capturedCard.classList.add("hidden");
+    this.updateCardOrder();
+    this.insertDraggedCard();
     this.clearDraggedCard();
+    this.clearDummyCard();
   };
 
   static setCapturedCard() {
@@ -106,6 +123,41 @@ export default class DragAndDrop {
     this.relativeTopInCard = e.clientY - bounds.top;
     this.capturedCard.style.left = bounds.left - 17 + "px";
     this.capturedCard.style.top = bounds.top - 17 + "px";
+  }
+
+  static getOrderInColumnByCardId(colId, cardId) {
+    return Data.getOrderInColumnByCardId(colId, cardId);
+  }
+
+  static updateCardOrder() {
+    const fromId = this.draggedCard.id;
+    const splitedFromId = fromId.split("_");
+    const fromColumnId = splitedFromId[1] - 0;
+    const fromCardId = splitedFromId[2] - 0;
+    const fromCardIndex = this.getOrderInColumnByCardId(
+      fromColumnId,
+      fromCardId
+    );
+    const toColumnId = this.enteredColumn.id.split("_")[1] - 0;
+    const toCardIndex = this.getIndexOfDummyCard();
+    if (fromColumnId === toColumnId && fromCardIndex === toCardIndex) return;
+    Data.updateCardOrder(
+      fromColumnId,
+      toColumnId,
+      fromCardIndex,
+      toCardIndex,
+      fromCardId
+    );
+  }
+
+  static getIndexOfDummyCard() {
+    const columnCards = this.enteredColumn.querySelector(".column_cards");
+    const childrenNodeList = columnCards.children;
+    const childrenArray = Array.prototype.slice.call(childrenNodeList);
+
+    return childrenArray
+      .filter((child) => !child.classList.contains("hidden"))
+      .findIndex((card) => card.classList.contains("dummy"));
   }
 
   static setEnteredColumn(e) {
