@@ -1,5 +1,12 @@
 import excute from "./excute";
-import { postCard, pushColumnOrder, postColumnOrder } from "./query";
+import {
+  postCard,
+  pushColumnOrder,
+  postColumnOrder,
+  putCard,
+  deleteCard,
+  pullColumnOrder,
+} from "./query";
 
 function queryPostCard(params) {
   const pushFromOrder = 1;
@@ -16,4 +23,14 @@ function queryPostCard(params) {
   });
 }
 
-export { queryPostCard };
+function queryPutCard(params) {
+  return excute(putCard(params));
+}
+
+function queryDeleteCard(params) {
+  return excute(deleteCard(params)).then(() => {
+    excute(pullColumnOrder(params.columnId, params.order));
+  });
+}
+
+export { queryPostCard, queryPutCard, queryDeleteCard };

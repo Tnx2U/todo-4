@@ -65,6 +65,16 @@ const pushColumnOrder = function (columnId, order) {
   return pushOrderQueryC;
 };
 
+const pullColumnOrder = function (columnId, order) {
+  let pullOrderQuery = `
+  update todo.columnOrder
+  set columnOrder.order = columnOrder.order - 1
+  where col_id = ? and columnOrder.order > ?;
+  `;
+  const pullOrderQueryC = mysql.format(pullOrderQuery, [columnId, order]);
+  return pullOrderQueryC;
+};
+
 const postColumnOrder = function (columnId, cardId, order) {
   let insertColumnOrderQuery = `
   insert into todo.columnOrder (columnOrder.order, col_id, card_id)
@@ -78,6 +88,28 @@ const postColumnOrder = function (columnId, cardId, order) {
   return insertColumnOrderQueryC;
 };
 
+const putCard = function (params) {
+  let putCardQuery = `
+  update todo.card
+  set card.note = ?
+  where id = ?;
+  `;
+  const putCardQueryC = mysql.format(putCardQuery, [
+    params.note,
+    params.cardId,
+  ]);
+  return putCardQueryC;
+};
+
+const deleteCard = function (params) {
+  let deleteCardQuery = `
+  delete from todo.card
+  where id = ?;
+  `;
+  const deleteCardQueryC = mysql.format(deleteCardQuery, [params.cardId]);
+  return deleteCardQueryC;
+};
+
 export {
   getInitialData,
   getAllCard,
@@ -87,4 +119,7 @@ export {
   postCard,
   pushColumnOrder,
   postColumnOrder,
+  putCard,
+  deleteCard,
+  pullColumnOrder,
 };
