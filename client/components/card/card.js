@@ -2,8 +2,8 @@ import DragAndDrop from "../../controllers/dragAndDrop.js";
 import Data from "../../controllers/data.js";
 
 export default class Card {
-  constructor(element, colId, cardId) {
-    this.element = element;
+  constructor(parentDom, colId, cardId) {
+    this.parentDom = parentDom;
     this.cardId = cardId;
     this.colId = colId;
     this.render();
@@ -23,10 +23,8 @@ export default class Card {
 
   render() {
     const cardInfo = Data.getCardDataById(this.colId, this.cardId);
-
-    this.element.insertAdjacentHTML(
-      "beforeend",
-      ` <div class="card_content">
+    this.parentDom.innerHTML += `<div class="card_wrap" id="card_${this.colId}_${this.cardId}">
+        <div class="card_content">
             <img class="img_card"/>
             <div class="card_note">
                 <span>${cardInfo.note}</span>
@@ -39,8 +37,7 @@ export default class Card {
             <span class="add_by">Added by</span>
             <span class="span_writer">${cardInfo.writer}</span>
         </div>
-      `
-    );
+      `;
   }
 
   update() {

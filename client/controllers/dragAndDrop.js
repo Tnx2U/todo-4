@@ -1,32 +1,22 @@
 export default class DragAndDrop {
-  static draggedCard = null;
-
-  static setDraggedCard(card) {
-    this.draggedCard = card;
-    this.setCaptureImage();
-    this.setEventListener();
+  static columnRootElement = null;
+  static initialize() {
+    this.columnRootElement = document.querySelector(".column_wrap");
+    this.columnRootElement.addEventListener("mousedown", this.onMouseDown);
   }
 
-  static onMouseMove(e) {
-    document.querySelector(".ondrag").style.left = e.offsetX + "px";
-    document.querySelector(".ondrag").style.top = e.offsetY + "px";
-  }
+  static onMouseDown = (e) => {
+    this.columnRootElement.addEventListener("mousemove", this.onMouseMove);
+    this.columnRootElement.addEventListener("mouseup", this.onMouseUp);
+  };
 
-  static setEventListener() {
-    this.setMouseMoveEvent();
-    this.setMouseUpEvent();
-  }
+  static onMouseMove = (e) => {
+    // document.querySelector(".ondrag").style.left = e.offsetX + "px";
+    // document.querySelector(".ondrag").style.top = e.offsetY + "px";
+  };
 
-  static setMouseMoveEvent() {
-    window.addEventListener("mousemove", this.onMouseMove);
-  }
-  static onMouceUp(e) {
-    window.removeEventListener("mousemove", this.onMouseMove);
-    window.removeEventListener("mouseup", this.onMouseUp);
-  }
-  static setMouseUpEvent() {
-    window.addEventListener("mouseup", onMouseUp);
-  }
-
-  static setCaptureImage() {}
+  static onMouseUp = (e) => {
+    this.columnRootElement.removeEventListener("mousemove", this.onMouseMove);
+    this.columnRootElement.removeEventListener("mouseup", this.onMouseUp);
+  };
 }

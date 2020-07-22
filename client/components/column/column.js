@@ -3,17 +3,15 @@ import Card from "../card/card.js";
 import Data from "../../controllers/data.js";
 
 export default class Column {
-  constructor(element, colId) {
-    this.element = element;
+  constructor(parentDom, colId) {
+    this.parentDom = parentDom;
     this.colId = colId;
     this.render();
   }
 
   renderColumInfo() {
     const columnInfo = Data.getColumnDataById(this.colId);
-    this.element.insertAdjacentHTML(
-      "beforeend",
-      `
+    this.parentDom.innerHTML += `<div class="column" id="column_${this.colId}">
         <div class="column_header">
             <button class="btn float_right">
               <img src="/public/images/more.svg" />
@@ -25,43 +23,21 @@ export default class Column {
             <h3 class="title_column">${columnInfo.title}</h3>
         </div>
         <div class="column_cards"></div>
-    `
-    );
+    `;
   }
 
   renderCards() {
     const columnInfo = Data.getColumnDataById(this.colId);
     columnInfo.cards.forEach((card) => {
-      const cardWrapElement = this.element.querySelector(".column_cards");
-      cardWrapElement.insertAdjacentHTML(
-        "beforeend",
-        `<div class="card_wrap" id="card_${card.cardId}">
-        </div>`
+      const cardWrapElement = this.parentDom.querySelector(
+        `#column_${this.colId}`
       );
-      const cardElement = this.element.querySelector(`#card_${card.cardId}`);
-      new Card(cardElement, this.colId, card.cardId);
+      new Card(cardWrapElement, this.colId, card.cardId);
     });
   }
 
   render() {
     this.renderColumInfo();
     this.renderCards();
-  }
-
-  update() {
-    this.remove();
-    this.render();
-  }
-
-  setCards(cards) {
-    this.cards = cards;
-  }
-
-  remove() {
-    var child = this.element.lastElementChild;
-    while (child) {
-      this.element.removeChild(child);
-      child = e.lastElementChild;
-    }
   }
 }
