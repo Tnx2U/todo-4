@@ -76,12 +76,32 @@ body,
 .menu_wrap {
   border: 1px solid #e1e4e8 !important;
   position: fixed;
-  right: 0;
   top: 0;
   bottom: 0;
   width: 360px;
   background-color: #fff;
   box-shadow: -3px 0 5px rgba(36, 41, 46, 0.05);
+  animation-name: slidein;
+  animation-duration: 3s;
+  right: 0;
+}
+@-webkit-keyframes menu_wrap {
+  from {
+    right: -360;
+  }
+
+  to {
+    right: 0;
+  }
+}
+@keyframes menu_wrap {
+  from {
+    right: -360;
+  }
+
+  to {
+    right: 0;
+  }
 }
 
 .menu_header,

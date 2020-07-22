@@ -15,10 +15,22 @@ export default class Column {
   setEventListener() {
     this.setMouseEnterEvent();
     this.setMouseDownEvent();
+    this.setMouseLeaveEvent();
+  }
+
+  onMouseLeave = (e) => {
+    DragAndDrop.isDragging() && console.log("떠났는뎅");
+    DragAndDrop.isDragging() && DragAndDrop.onEnterOtherColumn();
+  };
+
+  setMouseLeaveEvent() {
+    this.element.addEventListener("mouseleave", this.onMouseLeave);
   }
 
   onMouseEnter = (e) => {
-    DragAndDrop.isDragging() && DragAndDrop.onEnterColumn(e, this);
+    //DragAndDrop.isDragging() && DragAndDrop.setEnteredColumn(this);
+    //DragAndDrop.isDragging() && DragAndDrop.onEnterColumn(this);
+    DragAndDrop.isDragging() && console.log("들어왔는뎅");
   };
 
   setMouseEnterEvent() {
@@ -26,7 +38,7 @@ export default class Column {
   }
 
   onMouseDown = (e) => {
-    DragAndDrop.onEnterColumn(e, this);
+    DragAndDrop.onEnterColumn(this);
   };
 
   setMouseDownEvent() {
@@ -87,6 +99,7 @@ export default class Column {
     this.cards.forEach((card) => {
       card.remove();
     });
+    this.cards = [];
     var child = this.element.lastElementChild;
     while (child) {
       this.element.removeChild(child);

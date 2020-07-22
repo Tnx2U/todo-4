@@ -18,7 +18,9 @@ export default class DragAndDrop {
       this.addClassToDummyCard(card);
     }
   }
-
+  static hasDummyCard() {
+    return document.querySelector(".dummy") !== null;
+  }
   static addClassToDummyCard(card) {
     const dummyCardElement = document.querySelector(
       `#card_${card.colId}_${
@@ -28,14 +30,22 @@ export default class DragAndDrop {
     dummyCardElement.classList.add("dummy");
   }
 
+  static addClassToColumnDummyCard(column) {
+    const dummyCardElement = document.querySelector(
+      `#card_${column.colId}_${column.cards.length - 1}`
+    );
+    dummyCardElement.classList.add("dummy");
+  }
+
   static removeClassToDummyCard() {
     const dummyCardElement = document.querySelector(".dummy");
-    dummyCardElement.classList.remove("dummy");
+    if (dummyCardElement) dummyCardElement.classList.remove("dummy");
   }
   static isEnteredColumn() {
-    return this.enteredCard !== null;
+    return this.enteredColumn !== null;
   }
-  static onEnterColumn(e, column) {
+
+  static setEnteredColumn(column) {
     this.enteredColumn = column;
   }
 
@@ -47,14 +57,36 @@ export default class DragAndDrop {
     return this.enteredCard !== null;
   }
 
-  static onMouseLeave(e) {
+  static onMouseLeaveCard(e) {
+    this.popCardInfo();
+    this.removeClassToDummyCard();
+    this.enteredColumn.update();
     this.clearEnteredCard();
   }
   static clearEnteredCard() {
-    this.popCardInfo();
     this.enteredCard = null;
+  }
+  static onEnterColumn(column) {
+    this.setEnteredColumn(column);
+    if (!this.isEnteredCard() && !this.hasDummyCard()) {
+      this.pushBackCardInfo();
+      column.update();
+      this.addClassToColumnDummyCard(column);
+    }
+  }
+  static onEnterOtherColumn() {
+    if (this.hasDummyCard()) {
+      this.removeCardOnEnterColumn();
+      this.clearEnteredColumn();
+    }
+  }
+  static removeCardOnEnterColumn() {
+    this.popBackCardInfo();
     this.removeClassToDummyCard();
     this.enteredColumn.update();
+  }
+  static clearEnteredColumn() {
+    this.enteredColumn = null;
   }
 
   static popCardInfo() {
@@ -63,6 +95,13 @@ export default class DragAndDrop {
       this.dummyCardDirection
         ? this.enteredCard.orderInColumn
         : this.enteredCard.orderInColumn + 1
+    );
+  }
+
+  static popBackCardInfo() {
+    Data.popCardByColIdAndCardOrder(
+      this.enteredColumn.colId,
+      this.enteredColumn.cards.length - 1
     );
   }
 
@@ -76,13 +115,23 @@ export default class DragAndDrop {
     );
   }
 
+  static pushBackCardInfo() {
+    Data.pushCardByColIdAndCardOrder(
+      this.enteredColumn.colId,
+      this.enteredColumn.cards.length,
+      this.draggedCard.getCardInfo()
+    );
+  }
+
   static onEnterOtherCard(e, card) {
+    this.removeCardOnEnterColumn();
     this.setEnteredCard(card);
     this.setDummyCardDirection(e, card.element);
     this.pushCardInfo();
     this.enteredColumn.update();
     this.addClassToDummyCard(card);
   }
+
   static setEnteredCard(card) {
     this.enteredCard = card;
   }
@@ -103,9 +152,9 @@ export default class DragAndDrop {
   }
 
   static onMouseMove = (e) => {
-    document.querySelector(".ondrag").style.left =
+    document.querySelector(".captureImage").style.left =
       e.clientX - 17 - this.relativeLeftInCard + "px";
-    document.querySelector(".ondrag").style.top =
+    document.querySelector(".captureImage").style.top =
       e.clientY - 17 - this.relativeTopInCard + "px";
   };
 
@@ -119,9 +168,10 @@ export default class DragAndDrop {
   }
   static onMouseUp = (e) => {
     e.preventDefault();
+
     window.removeEventListener("mousemove", this.onMouseMove);
     window.removeEventListener("mouseup", this.onMouseUp);
-    this.isEnteredColumn() && this.removeClassToDummyCard();
+    this.removeClassToDummyCard();
     this.toggleCaptureImageVisible();
     this.draggedCard = null;
     this.enteredCard = null;
@@ -138,12 +188,12 @@ export default class DragAndDrop {
   }
 
   static toggleCaptureImageVisible() {
-    const cardElement = document.querySelector(".ondrag");
+    const cardElement = document.querySelector(".captureImage");
     cardElement.classList.toggle("hidden");
   }
 
   static setCaptureImageInfo() {
-    const cardElement = document.querySelector(".ondrag");
+    const cardElement = document.querySelector(".captureImage");
     cardElement.innerHTML = this.draggedCard.getInnerHtml();
   }
 
@@ -151,7 +201,8 @@ export default class DragAndDrop {
     const bounds = this.draggedCard.element.getBoundingClientRect();
     this.relativeLeftInCard = e.clientX - bounds.left;
     this.relativeTopInCard = e.clientY - bounds.top;
-    document.querySelector(".ondrag").style.left = bounds.left - 17 + "px";
-    document.querySelector(".ondrag").style.top = bounds.top - 17 + "px";
+    document.querySelector(".captureImage").style.left =
+      bounds.left - 17 + "px";
+    document.querySelector(".captureImage").style.top = bounds.top - 17 + "px";
   }
 }

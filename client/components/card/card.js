@@ -44,6 +44,9 @@ export default class Card {
   }
 
   dragStart = (e) => {
+    console.log("card down");
+    //    e.preventDefault();
+    // e.stopPropagation();
     DragAndDrop.setDraggedCard(e, this);
   };
 
@@ -52,8 +55,12 @@ export default class Card {
   }
 
   onMouseEnter = (e) => {
-    e.preventDefault();
-    if (DragAndDrop.isDragging() && !DragAndDrop.isEnteredCard()) {
+    e.stopPropagation();
+    if (
+      DragAndDrop.isDragging() &&
+      !DragAndDrop.isEnteredCard() &&
+      !this.element.classList.contains("dummy")
+    ) {
       DragAndDrop.onEnterOtherCard(e, this);
       this.removeMouseEnterEvent();
     }
@@ -69,7 +76,7 @@ export default class Card {
 
   onMouseLeave = (e) => {
     if (DragAndDrop.isDragging() && DragAndDrop.isEnteredCard()) {
-      DragAndDrop.clearEnteredCard();
+      DragAndDrop.onMouseLeaveCard();
       this.setMouseEnterEvent();
     }
   };

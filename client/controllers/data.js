@@ -83,12 +83,17 @@ export default class Data {
     const columnIndex = this.columnData.findIndex(
       (column) => column.colId === colId
     );
+    //    console.log(this.columnData[columnIndex].cards);
+    console.log(this.columnData[columnIndex].cards);
     this.columnData[columnIndex].cards.splice(order, 0, card);
+    console.log(this.columnData[columnIndex].cards);
   }
-  static popCardByColIdAndCardOrder(colId, order, card) {
+  static popCardByColIdAndCardOrder(colId, order) {
     const columnIndex = this.columnData.findIndex(
       (column) => column.colId === colId
     );
+    console.log(this.columnData[columnIndex].cards);
     this.columnData[columnIndex].cards.splice(order, 1);
+    console.log(this.columnData[columnIndex].cards);
   }
 }

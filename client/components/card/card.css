@@ -46,7 +46,7 @@
   color: #0366d6;
 }
 
-.ondrag {
+.captureImage {
   position: absolute;
   width: 333px;
   pointer-events: none;
@@ -55,6 +55,7 @@
 .dummy {
   box-shadow: 1px 0 rgba(27, 31, 35, 0.04) !important;
   opacity: 0.5;
+  /* pointer-events: none; */
 }
 
 .hidden {
