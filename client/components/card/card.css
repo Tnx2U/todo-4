@@ -8,6 +8,7 @@
   margin: 10px;
   background-color: white;
   position: relative;
+  user-select: none;
 }
 
 .card_content {
@@ -43,4 +44,14 @@
 
 .span_writer {
   color: #0366d6;
+}
+
+.hidden {
+  display: none;
+}
+
+#card_capture {
+  position: absolute;
+  width: 333px;
+  pointer-events: none;
 }
