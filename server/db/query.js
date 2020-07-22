@@ -41,10 +41,50 @@ const putColumnOrderForDAD = function (params) {
   return pushOrderQueryC + switchCardQueryC + pullOrderQueryC;
 };
 
+const postCard = function (params) {
+  let insertCardQuery = `
+  insert into todo.card (note, writer ,activation)
+  values (?, ?, ?);
+  `;
+
+  const insertCardQueryC = mysql.format(insertCardQuery, [
+    params.note,
+    params.writer,
+    1,
+  ]);
+  return insertCardQueryC;
+};
+
+const pushColumnOrder = function (columnId, order) {
+  let pushOrderQuery = `
+  update todo.columnOrder
+  set columnOrder.order = columnOrder.order + 1
+  where col_id = ? and columnOrder.order >= ?;
+  `;
+  const pushOrderQueryC = mysql.format(pushOrderQuery, [columnId, order]);
+  return pushOrderQueryC;
+};
+
+const postColumnOrder = function (columnId, cardId, order) {
+  let insertColumnOrderQuery = `
+  insert into todo.columnOrder (columnOrder.order, col_id, card_id)
+  values (?, ?, ?);
+  `;
+  const insertColumnOrderQueryC = mysql.format(insertColumnOrderQuery, [
+    order,
+    columnId,
+    cardId,
+  ]);
+  return insertColumnOrderQueryC;
+};
+
 export {
   getInitialData,
   getAllCard,
   getAllColumn,
   getAllColumnOrder,
   putColumnOrderForDAD,
+  postCard,
+  pushColumnOrder,
+  postColumnOrder,
 };
