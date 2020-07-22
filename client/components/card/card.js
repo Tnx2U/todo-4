@@ -23,7 +23,7 @@ export default class Card {
 
   render() {
     const cardInfo = Data.getCardDataById(this.colId, this.cardId);
-    this.parentDom.innerHTML += `<div class="card_wrap" id="card_${this.colId}_${this.cardId}">
+    this.parentDom.innerHTML += `<div class="card_wrap" id="card_${this.cardId}">
         <div class="card_content">
             <img class="img_card"/>
             <div class="card_note">
