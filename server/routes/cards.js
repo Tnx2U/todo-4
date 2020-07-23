@@ -14,6 +14,7 @@ router.put("/:card_id/note", async function (req, res, next) {
 
 router.delete("/:card_id", async function (req, res, next) {
   try {
+    console.log("access deletecard", req.body);
     await deleteCard(req.body);
     res.status(200).send({ success: true });
   } catch (error) {

@@ -1,4 +1,5 @@
 import DragAndDrop from "../../controllers/dragAndDrop.js";
+import ModalRander from "../../controllers/modalRander.js";
 import Data from "../../controllers/data.js";
 
 export default class Card {
@@ -12,16 +13,35 @@ export default class Card {
   }
 
   setEventListener() {
-    this.setMouseDownEvent();
+    // this.setMouseDownEvent();
     this.setMouseEnterEvent();
     this.setMouseLeaveEvent();
     this.setMouseMoveEvent();
+    this.setRemoveCardEvent();
   }
+
+  setRemoveCardEvent() {
+    console.log("config in card at setEvent :", this.colId);
+    this.element
+      .querySelector(".btn")
+      .addEventListener("click", this.renderDeleteCardModal);
+  }
+
+  renderDeleteCardModal = () => {
+    ModalRander.renderDeleteCardModal(
+      this.colId,
+      this.cardId,
+      this.orderInColumn + 1
+    );
+  };
 
   removeEventListener() {
     this.removeMouseEnterEvent();
     this.element.removeEventListener("mousedown", this.dragStart);
     this.element.removeEventListener("mouseleave", this.onMouseLeave);
+    this.element
+      .querySelector(".btn")
+      .removeEventListener("click", this.renderDeleteCardModal);
     this.removeMouseMoveEvent();
   }
 
