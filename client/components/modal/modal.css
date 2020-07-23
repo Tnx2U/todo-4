@@ -47,3 +47,55 @@
   box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.24), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
   background-color: #4caf50; /* Green */
 }
+.modal_edit_note {
+  width: 450px;
+  background: #fff;
+  border: 2px solid #666;
+  flex-direction: column;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+.header_modal {
+  box-sizing: border-box;
+  background-color: #eff1f3;
+  padding: 10px 5px;
+}
+
+.edit_note_content {
+  width: 100%;
+  display: block;
+  resize: vertical;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  line-height: 1.5;
+  box-sizing: border-box;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  height: 200px;
+}
+
+.wrap_edit_note {
+  padding: 10px 5px;
+}
+
+.wrap_btn_edit_note {
+  padding: 10px 5px;
+}
+
+.btn_confirm {
+  background-color: #2ea44f;
+  border-color: rgba(27, 31, 35, 0.1);
+  padding: 5px 16px;
+  border-radius: 6px;
+  margin-right: 4px;
+  color: #fff;
+}
+
+.btn_confirm:disabled {
+  background-color: #94d3a2;
+}

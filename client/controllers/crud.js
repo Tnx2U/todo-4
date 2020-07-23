@@ -1,4 +1,5 @@
 import RemoveCard from "../components/modal/removeCard.js";
+import EditNote from "../components/modal/editNote.js";
 import Data from "./data.js";
 
 export default class CRUD {
@@ -6,12 +7,14 @@ export default class CRUD {
     this.columnRootElement = document.querySelector(".column_wrap");
     this.setEventListenerToDeleteBtn();
     this.setEventListenerToAddCard();
+    this.setEventListenerToEditBtn();
     this.removeCard = new RemoveCard(
       this.onClickRemoveCard,
       this.clearModalLayer
     );
     this.selectedBtnId = null;
     this.addCard = this.addCard.bind(this);
+    this.editNote = new EditNote(this.onClickEditNote, this.clearModalLayer);
   }
 
   setEventListenerToDeleteBtn() {
@@ -19,6 +22,12 @@ export default class CRUD {
       btn.addEventListener("click", (e) =>
         this.setModalForRemoveCard(e, btn.id)
       );
+    });
+  }
+
+  setEventListenerToEditBtn() {
+    this.columnRootElement.querySelectorAll(".edit_card").forEach((btn) => {
+      btn.addEventListener("click", (e) => this.setModalForEditCard(e, btn.id));
     });
   }
 
@@ -88,12 +97,26 @@ export default class CRUD {
   setModalForRemoveCard = (e, id) => {
     this.selectedBtnId = id;
     e.stopPropagation();
-    this.setModalLayer();
+    this.setModalLayer(e);
     this.renderModalForRemoveCard();
+  };
+
+  setModalForEditCard = (e, id) => {
+    this.selectedBtnId = id;
+    e.stopPropagation();
+    this.setModalLayer();
+    const cardEl = e.target.closest(".card_wrap");
+    const cardContent = cardEl.querySelector(".card_note span").innerText;
+    this.editNote.setText(cardContent);
+    this.renderModalForEditCard();
   };
 
   renderModalForRemoveCard() {
     this.removeCard.open();
+  }
+
+  renderModalForEditCard() {
+    this.editNote.open();
   }
 
   setModalLayer() {
@@ -114,9 +137,23 @@ export default class CRUD {
     );
     selectedCardElement.remove();
   }
-
+  editSelectedCard(note) {
+    const splitedBtnId = this.selectedBtnId.split("_");
+    const columnId = splitedBtnId[2] - 0;
+    const cardId = splitedBtnId[3] - 0;
+    Data.editCard(columnId, cardId, note);
+    const selectedCardElement = document.querySelector(
+      `#card_${columnId}_${cardId}`
+    );
+    selectedCardElement.querySelector(".card_note span").innerText = note;
+  }
   onClickRemoveCard = () => {
     this.removeSelectedCard();
     this.clearModalLayer();
+  };
+
+  onClickEditNote = (note) => {
+    this.clearModalLayer();
+    this.editSelectedCard(note);
   };
 }

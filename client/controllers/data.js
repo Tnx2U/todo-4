@@ -1,6 +1,6 @@
 import getInitialData from "../apis/initialize.js";
 import { updateCardOrder } from "../apis/columnOrder.js";
-import { deleteCard, addCard } from "../apis/card.js";
+import { deleteCard, addCard, editCard } from "../apis/card.js";
 
 // activity 더미 데이터
 const dummyActData = [
@@ -71,6 +71,18 @@ export default class Data {
       writer: this.user,
     });
     return cardId;
+  }
+
+  static async editCard(colId, cardId, note) {
+    console.log(note);
+    await editCard(cardId, note)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response.success);
+      });
+    const columnIndex = this.getColumnOrderByColumId(columnId);
+    const cardIndex = this.getOrderInColumnByCardId(colId, cardId);
+    this.columnData[columnIndex].cards[cardIndex].note = note;
   }
 
   static async removeCard(colId, cardId, order) {

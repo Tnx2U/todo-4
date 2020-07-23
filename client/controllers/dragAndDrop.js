@@ -181,7 +181,7 @@ export default class DragAndDrop {
 
   static setEnteredCard(e) {
     let enteredCard = e.target.closest(".card_wrap");
-    if (!enteredCard || enteredCard.classList.contains("dummy")) {
+    if (!enteredCard) {
       enteredCard = null;
     }
     this.enteredCard = enteredCard;

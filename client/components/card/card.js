@@ -23,6 +23,9 @@ export default class Card {
         <button class="rem_card" id="btn_rem_${this.colId}_${this.cardId}">
           <img src="/public/images/close.svg" />
         </button>
+        <button class="edit_card" id="btn_edit_${this.colId}_${this.cardId}">
+          <img src="/public/images/edit.svg" />
+        </button>
     </div>
     <div class="card_bottom">
         <span class="add_by">Added by</span>
