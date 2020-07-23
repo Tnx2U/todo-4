@@ -55,6 +55,23 @@ const postCard = function (params) {
   return insertCardQueryC;
 };
 
+const postMoveActivity = function (params) {
+  let insertActivityQuery = `
+  INSERT into todo.activity (actionType , userName ,fromColumnTitle , toColumnTitle , cardNote )
+  values ("move", "user1" , 
+  (select title from todo.column where id = ?), 
+  (select title from todo.column where id = ?),
+  (select note from todo.card where id = ?));
+  `;
+
+  const insertActivityQueryC = mysql.format(insertActivityQuery, [
+    params.fromColumnId,
+    params.toColumnId,
+    params.cardId,
+  ]);
+  return insertActivityQueryC;
+};
+
 const pushColumnOrder = function (columnId, order) {
   let pushOrderQuery = `
   update todo.columnOrder
@@ -155,4 +172,5 @@ export {
   putColumn,
   getAllActivity,
   postActivity,
+  postMoveActivity,
 };
