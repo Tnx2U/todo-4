@@ -5,6 +5,7 @@ export default class CRUD {
   constructor() {
     this.columnRootElement = document.querySelector(".column_wrap");
     this.setEventListenerToDeleteBtn();
+    this.setEventListenerToAddCard();
     this.removeCard = new RemoveCard(
       this.onClickRemoveCard,
       this.clearModalLayer
@@ -19,6 +20,31 @@ export default class CRUD {
       );
     });
   }
+
+  setEventListenerToAddCard() {
+    this.columnRootElement.querySelectorAll(".add_card_btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => this.setAddCardArea(e));
+    });
+    this.columnRootElement
+      .querySelectorAll(".add_card_content")
+      .forEach((btn) => {
+        btn.addEventListener("input", (e) => this.onChangeTextArea(e));
+      });
+  }
+
+  setAddCardArea = (e) => {
+    e.target.closest(".column").classList.toggle("on_add_card");
+  };
+
+  onChangeTextArea = (e) => {
+    const target = e.target;
+    const addAreaWrap = target.closest(".add_card_wrap");
+    if (target.value.length > 0) {
+      addAreaWrap.classList.add("on_enter");
+    } else {
+      addAreaWrap.classList.remove("on_enter");
+    }
+  };
 
   setModalForRemoveCard = (e, id) => {
     this.selectedBtnId = id;

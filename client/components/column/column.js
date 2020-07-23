@@ -1,4 +1,3 @@
-// import Component from "../share/component";
 import Card from "../card/card.js";
 import Data from "../../controllers/data.js";
 
@@ -19,11 +18,18 @@ export default class Column {
         <button class="btn float_right">
           <img src="/public/images/more.svg" />
         </button>
-        <button class="btn float_right">
+        <button class="btn float_right add_card_btn">
           <img src="/public/images/add.svg" />
         </button>
         <span class="num_card">${columnInfo.cards.length}</span>
         <h3 class="title_column">${columnInfo.title}</h3>
+    </div>
+    <div class="add_card_wrap">
+      <textarea class="add_card_content" maxlength="500" placeholder="Enter a note"></textarea>
+      <div class="add_card_btn_wrap">
+        <button class="add_card_btn_confirm">Add</button>
+        <button class="add_card_btn_cancel">Cancel</button>
+      </div>
     </div>
     <div class="column_cards"></div>
 `
