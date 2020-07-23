@@ -65,7 +65,7 @@ export default class Modal {
       htmlSrc = ``;
     } else if (type == "deleteCard") {
       htmlSrc = `
-      <div class="modal_container">
+      <div class="modal_content">
         <div class="modal_text_area">
             <span>선택하신 카드를 삭제하시겠습니까?</span>
         </div>
@@ -73,6 +73,8 @@ export default class Modal {
             <button class="btn_deletecard_cancel">취소</button>
             <button class="btn_deletecard_confirm">확인</button>
         </div>
+      </div>
+      <div class="modal_layer">
       </div>
       `;
     }

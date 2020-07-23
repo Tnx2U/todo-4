@@ -3,6 +3,7 @@ import Column from "./components/column/column.js";
 import HiddenMenu from "./components/hiddenMenu/hiddenMenu.js";
 import Data from "./controllers/data.js";
 import DragAndDrop from "./controllers/dragAndDrop.js";
+import ModalRander from "./controllers/modalRander.js";
 
 function render() {
   new Header(document.querySelector(".header"));
@@ -12,6 +13,7 @@ function render() {
   });
 
   new HiddenMenu(document.querySelector(".menu_wrap"), Data.getActivityData());
+  ModalRander.renderDeleteCardModal(1, 1, 1);
 }
 
 function initialize() {
