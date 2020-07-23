@@ -12,6 +12,7 @@ body,
 .content {
   height: 95%;
   width: 100%;
+  user-select: none;
 }
 
 .column_wrap {

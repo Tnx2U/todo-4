@@ -11,7 +11,6 @@ function post(path, body) {
 
 function get(path, params) {
   const uri = buildGetUri(path, params);
-  console.log(uri);
   return fetch(uri, {
     method: "get",
     headers: {

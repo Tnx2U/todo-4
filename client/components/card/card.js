@@ -1,25 +1,30 @@
+import DragAndDrop from "../../controllers/dragAndDrop.js";
+import Data from "../../controllers/data.js";
+
 export default class Card {
-  constructor(parentDom, data) {
+  constructor(parentDom, colId, cardId) {
     this.parentDom = parentDom;
-    this.data = data;
+    this.cardId = cardId;
+    this.colId = colId;
     this.render();
   }
 
   render() {
-    this.parentDom.innerHTML += `<div class="card_wrap">
+    const cardInfo = Data.getCardDataById(this.colId, this.cardId);
+    this.parentDom.innerHTML += `<div class="card_wrap" id="card_${this.colId}_${this.cardId}">
         <div class="card_content">
-            <img class="img_card" src="https://static.thenounproject.com/png/14910-200.png"/>
+            <img class="img_card"/>
             <div class="card_note">
-                <span>${this.data.note}</span>
+                <span>${cardInfo.note}</span>
             </div>
-            <button class="btn">
+            <button class="btn" id="btn_${this.cardId}">
               <img src="/public/images/close.svg" />
             </button>
         </div>
         <div class="card_bottom">
             <span class="add_by">Added by</span>
-            <span class="span_writer">${this.data.writer}</span>
+            <span class="span_writer">${cardInfo.writer}</span>
         </div>
-      <div>`;
+      `;
   }
 }
