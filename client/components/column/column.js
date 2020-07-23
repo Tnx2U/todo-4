@@ -4,8 +4,8 @@ import Data from "../../controllers/data.js";
 import DragAndDrop from "../../controllers/dragAndDrop.js";
 
 export default class Column {
-  constructor(element, colId) {
-    this.element = element;
+  constructor(parentDom, colId) {
+    this.parentDom = parentDom;
     this.colId = colId;
     this.cards = [];
     this.render();
@@ -22,9 +22,7 @@ export default class Column {
 
   renderColumInfo() {
     const columnInfo = Data.getColumnDataById(this.colId);
-    this.element.insertAdjacentHTML(
-      "beforeend",
-      `
+    this.parentDom.innerHTML += `<div class="column" id="column_${this.colId}">
         <div class="column_header">
             <button class="btn float_right">
               <img src="/public/images/more.svg" />
@@ -36,48 +34,21 @@ export default class Column {
             <h3 class="title_column">${columnInfo.title}</h3>
         </div>
         <div class="column_cards"></div>
-    `
-    );
+    `;
   }
 
   renderCards() {
     const columnInfo = Data.getColumnDataById(this.colId);
-    const cardWrapElement = this.element.querySelector(".column_cards");
-    columnInfo.cards.forEach((card, index) => {
-      cardWrapElement.insertAdjacentHTML(
-        "beforeend",
-        `<div class="card_wrap" id="card_${this.colId}_${index}">
-        </div>`
+    columnInfo.cards.forEach((card, order) => {
+      const cardWrapElement = this.parentDom.querySelector(
+        `#column_${this.colId} .column_cards`
       );
-      const cardElement = this.element.querySelector(
-        `#card_${this.colId}_${index}`
-      );
-      this.cards.push(new Card(cardElement, this.colId, card.cardId, index));
+      new Card(cardWrapElement, this.colId, card.cardId, order);
     });
   }
 
   render() {
     this.renderColumInfo();
     this.renderCards();
-  }
-
-  update() {
-    this.remove();
-    this.render();
-  }
-
-  setCards(cards) {
-    this.cards = cards;
-  }
-
-  remove() {
-    this.cards.forEach((card) => {
-      card.remove();
-    });
-    var child = this.element.lastElementChild;
-    while (child) {
-      this.element.removeChild(child);
-      child = this.element.lastElementChild;
-    }
   }
 }

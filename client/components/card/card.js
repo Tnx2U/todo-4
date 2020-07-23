@@ -3,8 +3,9 @@ import ModalRander from "../../controllers/modalRander.js";
 import Data from "../../controllers/data.js";
 
 export default class Card {
-  constructor(element, colId, cardId, orderInColumn) {
-    this.element = element;
+  constructor(parentDom, colId, cardId, orderInColumn) {
+    this.parentDom = parentDom;
+    //수정 필요
     this.cardId = cardId;
     this.colId = colId;
     this.orderInColumn = orderInColumn;
@@ -13,16 +14,13 @@ export default class Card {
   }
 
   setEventListener() {
-    // this.setMouseDownEvent();
-    this.setMouseEnterEvent();
-    this.setMouseLeaveEvent();
     this.setMouseMoveEvent();
     this.setRemoveCardEvent();
   }
 
   setRemoveCardEvent() {
     console.log("config in card at setEvent :", this.colId);
-    this.element
+    this.parentDom
       .querySelector(".btn")
       .addEventListener("click", this.renderDeleteCardModal);
   }
@@ -36,77 +34,17 @@ export default class Card {
   };
 
   removeEventListener() {
-    this.removeMouseEnterEvent();
-    this.element.removeEventListener("mousedown", this.dragStart);
-    this.element.removeEventListener("mouseleave", this.onMouseLeave);
-    this.element
+    this.parentDom
       .querySelector(".btn")
       .removeEventListener("click", this.renderDeleteCardModal);
     this.removeMouseMoveEvent();
   }
 
-  moveStart = (e) => {
-    if (DragAndDrop.isDragging() && DragAndDrop.isEntered()) {
-      DragAndDrop.updateDummyCardDirection(e, this.element);
-    }
-  };
-
-  setMouseMoveEvent() {
-    this.element.addEventListener("mousemove", this.moveStart);
-  }
-
-  removeMouseMoveEvent() {
-    this.element.removeEventListener("mousemove", this.moveStart);
-  }
-
-  dragStart = (e) => {
-    DragAndDrop.setDraggedCard(e, this);
-  };
-
-  setMouseDownEvent() {
-    this.element.addEventListener("mousedown", this.dragStart);
-  }
-
-  onMouseEnter = (e) => {
-    e.preventDefault();
-    if (DragAndDrop.isDragging() && !DragAndDrop.isEntered()) {
-      DragAndDrop.onEnterOtherCard(e, this);
-      this.removeMouseEnterEvent();
-    }
-  };
-
-  setMouseEnterEvent() {
-    this.element.addEventListener("mouseenter", this.onMouseEnter);
-  }
-
-  removeMouseEnterEvent() {
-    this.element.removeEventListener("mouseenter", this.onMouseEnter);
-  }
-
-  onMouseLeave = (e) => {
-    if (DragAndDrop.isDragging() && DragAndDrop.isEntered()) {
-      DragAndDrop.clearEnteredCard();
-      this.setMouseEnterEvent();
-    }
-  };
-
-  setMouseLeaveEvent() {
-    this.element.addEventListener("mouseleave", this.onMouseLeave);
-  }
-
-  getCardInfo() {
-    return Data.getCardDataById(this.colId, this.cardId);
-  }
-
-  getInnerHtml() {
-    return this.element.innerHTML;
-  }
 
   render() {
-    const cardInfo = this.getCardInfo();
-    this.element.insertAdjacentHTML(
-      "beforeend",
-      ` <div class="card_content">
+    const cardInfo = Data.getCardDataById(this.colId, this.cardId);
+    this.parentDom.innerHTML += `<div class="card_wrap" id="card_${this.colId}_${this.cardId}">
+        <div class="card_content">
             <img class="img_card"/>
             <div class="card_note">
                 <span>${cardInfo.note}</span>
@@ -119,21 +57,6 @@ export default class Card {
             <span class="add_by">Added by</span>
             <span class="span_writer">${cardInfo.writer}</span>
         </div>
-      `
-    );
-  }
-
-  update() {
-    this.remove();
-    this.render();
-  }
-
-  remove() {
-    this.removeEventListener();
-    var child = this.element.lastElementChild;
-    while (child) {
-      this.element.removeChild(child);
-      child = this.element.lastElementChild;
-    }
+      `;
   }
 }
