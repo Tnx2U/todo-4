@@ -175,9 +175,11 @@ export default class DragAndDrop {
   }
 
   static setEnteredCard(e) {
-    const enteredCard = e.target.closest(".card_wrap");
-
-    this.enteredCard = enteredCard || null;
+    let enteredCard = e.target.closest(".card_wrap");
+    if (!enteredCard || enteredCard.classList.contains("dummy")) {
+      enteredCard = null;
+    }
+    this.enteredCard = enteredCard;
   }
 
   static isColumnEntered() {

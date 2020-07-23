@@ -44,7 +44,6 @@ export default class Modal {
   removeCard = () => {
     //card api를 통해 카드 삭제 요청
     //해당 컬럼 리랜더링은 어디서 할지 생각
-    console.log("config in modal : ", this.config);
     deleteCard(this.config.colId, this.config.cardId, this.config.order);
     ModalRander.hideModal();
   };
@@ -78,6 +77,5 @@ export default class Modal {
       `;
     }
     this.element.insertAdjacentHTML("beforeend", htmlSrc);
-    console.log("rander modal componsent");
   }
 }
