@@ -123,6 +123,23 @@ const putColumn = function (params) {
   return putColumnQueryC;
 };
 
+const getAllActivity = `select * from todo.activity order by actionTime desc;`;
+
+const postActivity = function (params) {
+  let postActivityQuery = `
+  insert into todo.activity (actionType, userName, fromColumnTitle, toColumnTitle, cardNote)
+  values (?, ?, ?, ?, ?);
+  `;
+  const postActivityQueryC = mysql.format(postActivityQuery, [
+    params.actionType,
+    params.userName,
+    params.fromColumnTitle,
+    params.toColumnTitle,
+    params.cardNote,
+  ]);
+  return postActivityQueryC;
+};
+
 export {
   getInitialData,
   getAllCard,
@@ -136,4 +153,6 @@ export {
   deleteCard,
   pullColumnOrder,
   putColumn,
+  getAllActivity,
+  postActivity,
 };

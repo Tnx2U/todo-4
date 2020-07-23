@@ -9,6 +9,7 @@ const initializeRouter = require("./routes/initialize");
 const columnOrderRouter = require("./routes/column_order");
 const cardRouter = require("./routes/cards");
 const columnRouter = require("./routes/column");
+const activityRouter = require("./routes/activity");
 const app = express();
 const bodyParser = require("body-parser");
 
@@ -26,6 +27,7 @@ app.use("/init", initializeRouter);
 app.use("/column_order", columnOrderRouter);
 app.use("/card", cardRouter);
 app.use("/column", columnRouter);
+app.use("/activity", activityRouter);
 app.use(express.static(path.join(__dirname, "../client")));
 
 // catch 404 and forward to error handler

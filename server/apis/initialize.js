@@ -2,7 +2,6 @@ import { queryInitialData } from "../db/initialize";
 
 async function getInitialData() {
   const result = await queryInitialData();
-  console.log("query reult : ", result);
   let initialData = [];
   let colId = 1;
   let cards = [];
