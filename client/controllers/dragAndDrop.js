@@ -36,7 +36,6 @@ export default class DragAndDrop {
   }
 
   static onMouseMove = (e) => {
-    const beforeEnteredColumn = this.enteredColumn;
     const beforeEnteredCard = this.enteredCard;
     const beforeDirection = this.dummyCardDirection;
     this.setCapturedCardPosition(e);
@@ -98,7 +97,7 @@ export default class DragAndDrop {
     this.columnRootElement.removeEventListener("mouseup", this.onMouseUp);
     this.capturedCard.classList.add("hidden");
     this.updateCardOrder();
-    this.updateCardId();
+    this.updateCardElementId();
     this.insertDraggedCard();
     this.clearDraggedCard();
     this.clearDummyCard();
@@ -150,7 +149,7 @@ export default class DragAndDrop {
     );
   }
 
-  static updateCardId() {
+  static updateCardElementId() {
     const fromId = this.draggedCard.id;
     const splitedFromId = fromId.split("_");
     const toColumnId = this.enteredColumn.id.split("_")[1] - 0;

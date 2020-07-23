@@ -79,7 +79,7 @@ export default class Data {
     );
     this.columnData[toColumnOrder].cards.splice(
       orderInToColumn,
-      1,
+      0,
       fromCardData[0]
     );
   }
