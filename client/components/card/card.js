@@ -18,7 +18,6 @@ export default class Card {
   }
 
   setRemoveCardEvent() {
-    console.log("config in card at setEvent :", this.colId);
     this.parentDom
       .querySelector(".btn")
       .addEventListener("click", this.renderDeleteCardModal);

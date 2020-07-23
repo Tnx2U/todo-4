@@ -1,7 +1,18 @@
 function post(path, body) {
-  const uri = getBasicUri(path, params);
+  const uri = getBasicUri(path);
   return fetch(uri, {
     method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      Accept: "application/json",
+    },
+  });
+}
+
+function put(path, body) {
+  const uri = getBasicUri(path);
+  return fetch(uri, {
+    method: "PUT",
     body: JSON.stringify(body),
     headers: {
       Accept: "application/json",
@@ -43,4 +54,4 @@ function buildGetUri(path, params) {
   return url;
 }
 
-export { post, get, del };
+export { post, get, del, put };
