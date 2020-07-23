@@ -4,7 +4,6 @@ import HiddenMenu from "./components/hiddenMenu/hiddenMenu.js";
 import Data from "./controllers/data.js";
 import DragAndDrop from "./controllers/dragAndDrop.js";
 import CRUD from "./controllers/crud.js";
-import ModalRander from "./controllers/modalRander.js";
 
 function render() {
   new Header(document.querySelector(".header"));

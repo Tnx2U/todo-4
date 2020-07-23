@@ -1,7 +1,6 @@
 // import Component from "../share/component";
 import Card from "../card/card.js";
 import Data from "../../controllers/data.js";
-import DragAndDrop from "../../controllers/dragAndDrop.js";
 
 export default class Column {
   constructor(parentDom, colId) {

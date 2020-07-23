@@ -1,4 +1,3 @@
-import ModalRander from "../../controllers/modalRander.js";
 import { deleteCard } from "../../apis/card.js";
 
 export default class Modal {
@@ -38,14 +37,12 @@ export default class Modal {
 
   cancelRemoveCard = () => {
     this.remove();
-    ModalRander.hideModal();
   };
 
   removeCard = () => {
     //card api를 통해 카드 삭제 요청
     //해당 컬럼 리랜더링은 어디서 할지 생각
     deleteCard(this.config.colId, this.config.cardId, this.config.order);
-    ModalRander.hideModal();
   };
 
   remove() {

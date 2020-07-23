@@ -1,5 +1,3 @@
-import DragAndDrop from "../../controllers/dragAndDrop.js";
-import ModalRander from "../../controllers/modalRander.js";
 import Data from "../../controllers/data.js";
 
 export default class Card {
