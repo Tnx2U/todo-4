@@ -1,4 +1,5 @@
 import getInitialData from "../apis/initialize.js";
+import getAllActivity from "../apis/activity.js";
 import { updateCardOrder } from "../apis/columnOrder.js";
 // activity 더미 데이터
 const dummyActData = [
@@ -49,7 +50,11 @@ export default class Data {
       .then((response) => response.json())
       .then((response) => {
         this.setColumnData(response.data);
-        this.setActivityData(dummyActData);
+      });
+    await getAllActivity()
+      .then((response) => response.json())
+      .then((response) => {
+        this.setActivityData(response.data);
       });
   }
   static updateCardOrder(

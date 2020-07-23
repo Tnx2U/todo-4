@@ -1,8 +1,8 @@
-import { del } from "../controllers/fetcher.js";
+import { get } from "../controllers/fetcher.js";
 
-const getAllActivity = function () {
-  const path = `/activity/`;
-  return del(path, params);
-};
+function getAllActivity() {
+  const path = "/activity";
+  return get(path, []);
+}
 
-export { getAllActivity };
+export default getAllActivity;

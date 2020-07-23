@@ -1,10 +1,12 @@
 import Activity from "../activity/activity.js";
+import Data from "../../controllers/data.js";
 
 export default class HiddenMenu {
-  constructor(parentDom, data) {
+  constructor(parentDom) {
     this.parentDom = parentDom;
-    this.data = data;
+    this.data = Data.getActivityData();
     this.render();
+    console.log("activity in hiddenmenu : ", this.data);
   }
 
   render() {
