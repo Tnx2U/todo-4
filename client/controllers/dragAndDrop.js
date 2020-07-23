@@ -23,7 +23,7 @@ export default class DragAndDrop {
   };
 
   static clickOtherElement(e) {
-    return e.target.closest(".rem_card") !== null;
+    return e.target.closest("button") !== null;
   }
 
   static setDraggedCard(e) {

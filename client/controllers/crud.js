@@ -11,6 +11,7 @@ export default class CRUD {
       this.clearModalLayer
     );
     this.selectedBtnId = null;
+    this.addCard = this.addCard.bind(this);
   }
 
   setEventListenerToDeleteBtn() {
@@ -23,16 +24,26 @@ export default class CRUD {
 
   setEventListenerToAddCard() {
     this.columnRootElement.querySelectorAll(".add_card_btn").forEach((btn) => {
-      btn.addEventListener("click", (e) => this.setAddCardArea(e));
+      btn.addEventListener("click", this.toggleAddCardArea);
     });
+    this.columnRootElement
+      .querySelectorAll(".add_card_btn_cancel")
+      .forEach((btn) => {
+        btn.addEventListener("click", this.toggleAddCardArea);
+      });
     this.columnRootElement
       .querySelectorAll(".add_card_content")
       .forEach((btn) => {
-        btn.addEventListener("input", (e) => this.onChangeTextArea(e));
+        btn.addEventListener("input", this.onChangeTextArea);
+      });
+    this.columnRootElement
+      .querySelectorAll(".add_card_btn_confirm")
+      .forEach((btn) => {
+        btn.addEventListener("click", this.addCard);
       });
   }
 
-  setAddCardArea = (e) => {
+  toggleAddCardArea = (e) => {
     e.target.closest(".column").classList.toggle("on_add_card");
   };
 
@@ -40,11 +51,39 @@ export default class CRUD {
     const target = e.target;
     const addAreaWrap = target.closest(".add_card_wrap");
     if (target.value.length > 0) {
-      addAreaWrap.classList.add("on_enter");
+      addAreaWrap.querySelector(".add_card_btn_confirm").disabled = false;
     } else {
-      addAreaWrap.classList.remove("on_enter");
+      addAreaWrap.querySelector(".add_card_btn_confirm").disabled = true;
     }
   };
+
+  async addCard(e) {
+    const target = e.target;
+    const columnElement = target.closest(".column");
+    const cardContent = columnElement.querySelector(".add_card_content");
+    const columnCards = columnElement.querySelector(".column_cards");
+    const colId = columnElement.id.split("_")[1] - 0;
+    const cardId = await Data.addCard(cardContent.value, colId);
+    columnCards.insertAdjacentHTML(
+      "afterbegin",
+      `<div class="card_wrap" id="card_${colId}_${cardId}">
+    <div class="card_content">
+        <img class="img_card"/>
+        <div class="card_note">
+            <span>${cardContent.value}</span>
+        </div>
+        <button class="rem_card" id="btn_rem_${colId}_${cardId}">
+          <img src="/public/images/close.svg" />
+        </button>
+    </div>
+    <div class="card_bottom">
+        <span class="add_by">Added by</span>
+        <span class="span_writer">${Data.user}</span>
+    </div>
+  `
+    );
+    e.target.closest(".column").classList.remove("on_add_card");
+  }
 
   setModalForRemoveCard = (e, id) => {
     this.selectedBtnId = id;

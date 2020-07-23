@@ -27,7 +27,7 @@ export default class Column {
     <div class="add_card_wrap">
       <textarea class="add_card_content" maxlength="500" placeholder="Enter a note"></textarea>
       <div class="add_card_btn_wrap">
-        <button class="add_card_btn_confirm">Add</button>
+        <button class="add_card_btn_confirm" disabled>Add</button>
         <button class="add_card_btn_cancel">Cancel</button>
       </div>
     </div>

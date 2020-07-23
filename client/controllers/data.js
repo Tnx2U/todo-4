@@ -1,6 +1,6 @@
 import getInitialData from "../apis/initialize.js";
 import { updateCardOrder } from "../apis/columnOrder.js";
-import { deleteCard } from "../apis/card.js";
+import { deleteCard, addCard } from "../apis/card.js";
 
 // activity 더미 데이터
 const dummyActData = [
@@ -45,6 +45,7 @@ const dummyActData = [
 export default class Data {
   static columnData = null;
   static activityData = null;
+  static user = "woowa";
 
   static async initialize() {
     await getInitialData()
@@ -55,6 +56,23 @@ export default class Data {
         this.setActivityData(dummyActData);
       });
   }
+
+  static async addCard(note, columnId) {
+    const writer = this.user;
+    const cardId = await addCard(writer, note, columnId)
+      .then((response) => response.json())
+      .then((response) => {
+        return response.cardId;
+      });
+    const columnIndex = this.getColumnOrderByColumId(columnId);
+    this.columnData[columnIndex].cards.splice(0, 0, {
+      cardId: cardId,
+      note: note,
+      writer: this.user,
+    });
+    return cardId;
+  }
+
   static async removeCard(colId, cardId, order) {
     await deleteCard(colId, cardId, order)
       .then((response) => response.json())

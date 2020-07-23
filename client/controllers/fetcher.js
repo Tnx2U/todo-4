@@ -5,6 +5,7 @@ function post(path, body) {
     body: JSON.stringify(body),
     headers: {
       Accept: "application/json",
+      "Content-Type": "application/json",
     },
   });
 }
