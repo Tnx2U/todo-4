@@ -52,8 +52,8 @@ export default class Data {
         this.setActivityData(dummyActData);
       });
   }
-  //static async updateCardOrder(
   static updateCardOrder(
+    //static async updateCardOrder(
     fromColumnId,
     toColumnId,
     orderInFromColumn,

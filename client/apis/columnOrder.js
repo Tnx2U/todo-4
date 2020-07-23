@@ -1,4 +1,4 @@
-import { post } from "../controllers/fetcher.js";
+import { put } from "../controllers/fetcher.js";
 
 function updateCardOrder(
   fromColumnId,
@@ -8,7 +8,7 @@ function updateCardOrder(
   cardId
 ) {
   const path = "/column_order/drag_and_drop";
-  return post(path, {
+  return put(path, {
     fromColumnId,
     toColumnId,
     orderInFromColumn,
