@@ -44,7 +44,6 @@ export default class DragAndDrop {
     this.setEnteredCard(e);
 
     if (!this.isColumnEntered()) {
-      this.clearDummyCard();
       return;
     }
     if (this.isCardEntered()) {
@@ -99,6 +98,7 @@ export default class DragAndDrop {
     this.columnRootElement.removeEventListener("mouseup", this.onMouseUp);
     this.capturedCard.classList.add("hidden");
     this.updateCardOrder();
+    this.updateCardId();
     this.insertDraggedCard();
     this.clearDraggedCard();
     this.clearDummyCard();
@@ -150,6 +150,14 @@ export default class DragAndDrop {
     );
   }
 
+  static updateCardId() {
+    const fromId = this.draggedCard.id;
+    const splitedFromId = fromId.split("_");
+    const toColumnId = this.enteredColumn.id.split("_")[1] - 0;
+    const fromCardId = splitedFromId[2] - 0;
+    this.draggedCard.id = ["card", toColumnId, fromCardId].join("_");
+  }
+
   static getIndexOfDummyCard() {
     const columnCards = this.enteredColumn.querySelector(".column_cards");
     const childrenNodeList = columnCards.children;
@@ -163,7 +171,7 @@ export default class DragAndDrop {
   static setEnteredColumn(e) {
     const enteredColumn = e.target.closest(".column");
 
-    this.enteredColumn = enteredColumn || null;
+    if (enteredColumn) this.enteredColumn = enteredColumn;
   }
 
   static setEnteredCard(e) {
