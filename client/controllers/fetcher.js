@@ -9,6 +9,18 @@ function post(path, body) {
   });
 }
 
+function del(path, body) {
+  const uri = getBasicUri(path);
+  return fetch(uri, {
+    method: "DELETE",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+}
+
 function get(path, params) {
   const uri = buildGetUri(path, params);
   return fetch(uri, {
@@ -31,4 +43,4 @@ function buildGetUri(path, params) {
   return url;
 }
 
-export { post, get };
+export { post, get, del };

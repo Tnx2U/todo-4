@@ -15,10 +15,10 @@ function render() {
 }
 
 function initialize() {
-  //suggest : 기다리는 대상이 없는 async를 쓸 필요가 있나?
   Data.initialize().then(() => {
     render();
     DragAndDrop.initialize();
   });
 }
+
 initialize();

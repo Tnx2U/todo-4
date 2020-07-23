@@ -1,12 +1,42 @@
 import DragAndDrop from "../../controllers/dragAndDrop.js";
+import ModalRander from "../../controllers/modalRander.js";
 import Data from "../../controllers/data.js";
 
 export default class Card {
-  constructor(parentDom, colId, cardId) {
+  constructor(parentDom, colId, cardId, orderInColumn) {
     this.parentDom = parentDom;
+    //수정 필요
     this.cardId = cardId;
     this.colId = colId;
+    this.orderInColumn = orderInColumn;
     this.render();
+    this.setEventListener();
+  }
+
+  setEventListener() {
+    this.setRemoveCardEvent();
+  }
+
+  setRemoveCardEvent() {
+    console.log("config in card at setEvent :", this.colId);
+    this.parentDom
+      .querySelector(".btn")
+      .addEventListener("click", this.renderDeleteCardModal);
+  }
+
+  renderDeleteCardModal = () => {
+    ModalRander.renderDeleteCardModal(
+      this.colId,
+      this.cardId,
+      this.orderInColumn + 1
+    );
+  };
+
+  removeEventListener() {
+    this.parentDom
+      .querySelector(".btn")
+      .removeEventListener("click", this.renderDeleteCardModal);
+    this.removeMouseMoveEvent();
   }
 
   render() {

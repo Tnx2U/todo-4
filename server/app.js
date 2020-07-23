@@ -1,12 +1,16 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
-var indexRouter = require("./routes/index");
-var initializeRouter = require("./routes/initialize");
-var app = express();
+const indexRouter = require("./routes/index");
+const initializeRouter = require("./routes/initialize");
+const columnOrderRouter = require("./routes/column_order");
+const cardRouter = require("./routes/cards");
+const columnRouter = require("./routes/column");
+const app = express();
+const bodyParser = require("body-parser");
 
 require("dotenv").config();
 app.set("views", path.join(__dirname, "../client/public"));
@@ -14,11 +18,14 @@ app.engine("html", require("ejs").renderFile);
 app.set("view engine", "html");
 
 app.use(logger("dev"));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(cookieParser());
 app.use("/", indexRouter);
 app.use("/init", initializeRouter);
+app.use("/column_order", columnOrderRouter);
+app.use("/card", cardRouter);
+app.use("/column", columnRouter);
 app.use(express.static(path.join(__dirname, "../client")));
 
 // catch 404 and forward to error handler
