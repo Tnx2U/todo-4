@@ -14,7 +14,6 @@ export default class Card {
   }
 
   setEventListener() {
-    this.setMouseMoveEvent();
     this.setRemoveCardEvent();
   }
 
@@ -39,7 +38,6 @@ export default class Card {
       .removeEventListener("click", this.renderDeleteCardModal);
     this.removeMouseMoveEvent();
   }
-
 
   render() {
     const cardInfo = Data.getCardDataById(this.colId, this.cardId);

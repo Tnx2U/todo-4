@@ -13,6 +13,7 @@ export default class DragAndDrop {
   static onMouseDown = (e) => {
     this.setDraggedCard(e);
     if (!this.isCardDragged()) return;
+    this.setEnteredColumn(e);
     this.setCapturedCard();
     this.setRelativePositionInCard(e);
     this.columnRootElement.addEventListener("mousemove", this.onMouseMove);

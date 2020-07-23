@@ -9,15 +9,6 @@ export default class Column {
     this.colId = colId;
     this.cards = [];
     this.render();
-    this.setMouseEnterEvent();
-  }
-
-  onMouseEnter = (e) => {
-    DragAndDrop.isDragging() && DragAndDrop.onEnterColumn(e, this);
-  };
-
-  setMouseEnterEvent() {
-    this.element.addEventListener("mouseenter", this.onMouseEnter);
   }
 
   renderColumInfo() {
