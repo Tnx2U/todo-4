@@ -72,6 +72,51 @@ const postMoveActivity = function (params) {
   return insertActivityQueryC;
 };
 
+const postDeleteActivity = function (params) {
+  let insertActivityQuery = `
+  INSERT into todo.activity (actionType , userName ,fromColumnTitle , toColumnTitle , cardNote )
+  values ("delete", "user1" , 
+  (select title from todo.column where id = ?), 
+  (select title from todo.column where id = ?),
+  (select note from todo.card where id = ?));
+  `;
+
+  const insertActivityQueryC = mysql.format(insertActivityQuery, [
+    params.columnId,
+    params.columnId,
+    params.cardId,
+  ]);
+  return insertActivityQueryC;
+};
+
+const postAddActivity = function (params) {
+  let insertActivityQuery = `
+  INSERT into todo.activity (actionType , userName ,fromColumnTitle , toColumnTitle , cardNote )
+  values ("add", "user1" , 
+  (select title from todo.column where id = ?), 
+  (select title from todo.column where id = ?),
+  ?
+  );
+  `;
+
+  const insertActivityQueryC = mysql.format(insertActivityQuery, [
+    params.columnId,
+    params.columnId,
+    params.note,
+  ]);
+  return insertActivityQueryC;
+};
+
+const postUpdateActivity = function (params) {
+  let insertActivityQuery = `
+  INSERT into todo.activity (actionType , userName  , cardNote )
+  values ("update", "user1", ?);
+  `;
+
+  const insertActivityQueryC = mysql.format(insertActivityQuery, [params.note]);
+  return insertActivityQueryC;
+};
+
 const pushColumnOrder = function (columnId, order) {
   let pushOrderQuery = `
   update todo.columnOrder
@@ -173,4 +218,7 @@ export {
   getAllActivity,
   postActivity,
   postMoveActivity,
+  postDeleteActivity,
+  postAddActivity,
+  postUpdateActivity,
 };
