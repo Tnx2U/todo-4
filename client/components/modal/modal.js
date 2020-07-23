@@ -74,8 +74,6 @@ export default class Modal {
             <button class="btn_deletecard_confirm">확인</button>
         </div>
       </div>
-      <div class="modal_layer">
-      </div>
       `;
     }
     this.element.insertAdjacentHTML("beforeend", htmlSrc);
