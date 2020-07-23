@@ -12,6 +12,7 @@ export default class DragAndDrop {
 
   static onMouseDown = (e) => {
     this.setDraggedCard(e);
+    if (this.clickOtherElement(e)) return;
     if (!this.isCardDragged()) return;
     this.setEnteredColumn(e);
     this.setCapturedCard();
@@ -20,6 +21,10 @@ export default class DragAndDrop {
     this.columnRootElement.addEventListener("mouseup", this.onMouseUp);
     this.draggedCard.classList.add("hidden");
   };
+
+  static clickOtherElement(e) {
+    return e.target.closest(".btn") !== null;
+  }
 
   static setDraggedCard(e) {
     const draggedCard = e.target.closest(".card_wrap");
