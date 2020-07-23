@@ -5,7 +5,7 @@ import { getInitialData } from "../apis/initialize";
 router.get("/", async function (req, res, next) {
   try {
     const initialData = await getInitialData();
-    console.log("initialDAta : ", initialData);
+    console.log("initialDAta : ", JSON.stringify(initialData));
     res.status(200).send({ success: true, data: initialData });
   } catch (error) {
     console.log(error.message);

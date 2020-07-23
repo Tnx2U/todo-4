@@ -2,22 +2,42 @@ import { queryInitialData } from "../db/initialize";
 
 async function getInitialData() {
   const result = await queryInitialData();
+  console.log("query reult : ", result);
   let initialData = [];
   let colId = 1;
   let cards = [];
   for (let index = 0; index < result.length; index++) {
     if (index == result.length - 1) {
       //마지막 원소
-      cards.push({
-        cardId: result[index].cardId,
-        note: result[index].note,
-        writer: result[index].writer,
-      });
-      initialData.push({
-        colId: result[index].colId,
-        title: result[index].columnTitle,
-        cards: cards,
-      });
+      if (result[index].colId !== colId) {
+        initialData.push({
+          colId: result[index - 1].colId,
+          title: result[index - 1].columnTitle,
+          cards: cards,
+        });
+        initialData.push({
+          colId: result[index].colId,
+          title: result[index].columnTitle,
+          cards: [
+            {
+              cardId: result[index].cardId,
+              note: result[index].note,
+              writer: result[index].writer,
+            },
+          ],
+        });
+      } else {
+        cards.push({
+          cardId: result[index].cardId,
+          note: result[index].note,
+          writer: result[index].writer,
+        });
+        initialData.push({
+          colId: result[index].colId,
+          title: result[index].columnTitle,
+          cards: cards,
+        });
+      }
       break;
     }
 
