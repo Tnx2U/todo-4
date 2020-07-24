@@ -1,9 +1,10 @@
 import Activity from "../activity/activity.js";
+import Data from "../../controllers/data.js";
 
 export default class HiddenMenu {
-  constructor(parentDom, data) {
+  constructor(parentDom) {
     this.parentDom = parentDom;
-    this.data = data;
+    this.data = Data.getActivityData();
     this.render();
   }
 
@@ -23,8 +24,8 @@ export default class HiddenMenu {
       <img src="/public/images/noti.svg" />
       <h3 class="menu_title">Activity</h3>
     </div>
-    <ul class="activity_content">
-    </ul>
+    <div class="activity_content">
+    </div>
     `;
     for (let index = 0; index < this.data.length; index++) {
       new Activity(

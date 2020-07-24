@@ -12,7 +12,7 @@ function render() {
     new Column(columnWrapElement, column.colId);
   });
 
-  new HiddenMenu(document.querySelector(".menu_wrap"), Data.getActivityData());
+  new HiddenMenu(document.querySelector(".menu_wrap"));
 }
 
 function initialize() {

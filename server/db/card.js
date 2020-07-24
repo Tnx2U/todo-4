@@ -6,9 +6,16 @@ import {
   putCard,
   deleteCard,
   pullColumnOrder,
+  postDeleteActivity,
+  postAddActivity,
+  postUpdateActivity,
 } from "./query";
 
 function queryPostCard(params) {
+  excute(postAddActivity(params))
+  .catch((error) => {
+    console.log(error);
+  })
   const pushFromOrder = 1;
   //카드 row 추가
   return excute(postCard(params)).then((result) => {
@@ -22,17 +29,25 @@ function queryPostCard(params) {
         return { cardId: params.insertId };
       });
     });
-  });
 }
 
 function queryPutCard(params) {
+  excute(postUpdateActivity(params)).catch((error) => {
+    console.log(error);
+  });
   return excute(putCard(params));
 }
 
 function queryDeleteCard(params) {
-  return excute(deleteCard(params)).then(() => {
-    excute(pullColumnOrder(params.columnId, params.order));
-  });
+  excute(postDeleteActivity(params))
+    .catch((error) => {
+      console.log(error);
+    })
+    .then(() => {
+      return excute(deleteCard(params)).then(() => {
+        excute(pullColumnOrder(params.columnId, params.order));
+      });
+    });
 }
 
 export { queryPostCard, queryPutCard, queryDeleteCard };

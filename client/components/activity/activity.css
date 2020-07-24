@@ -3,6 +3,7 @@
   border-color: antiquewhite;
   display: flex;
   flex-direction: row;
+  padding: 8px 5px;
 }
 
 .activity_card div {
@@ -16,6 +17,7 @@
 
 .message {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
 }
 

@@ -1,4 +1,5 @@
 import getInitialData from "../apis/initialize.js";
+import getAllActivity from "../apis/activity.js";
 import { updateCardOrder } from "../apis/columnOrder.js";
 import { deleteCard, addCard, editCard } from "../apis/card.js";
 
@@ -53,7 +54,11 @@ export default class Data {
       .then((response) => {
         console.log(response.data);
         this.setColumnData(response.data);
-        this.setActivityData(dummyActData);
+      });
+    await getAllActivity()
+      .then((response) => response.json())
+      .then((response) => {
+        this.setActivityData(response.data);
       });
   }
 
