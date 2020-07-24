@@ -39,6 +39,7 @@ function queryPutCard(params) {
 }
 
 function queryDeleteCard(params) {
+  console.log(params);
   excute(postDeleteActivity(params))
     .catch((error) => {
       console.log(error);
