@@ -8,37 +8,78 @@ const getInitialData = `select column.id colId, column.title columnTitle, column
 const getAllColumn = `select * from todo.column;`;
 const getAllCard = `select * from todo.card;`;
 const getAllColumnOrder = "select * from todo.columnOrder";
-const putColumnOrderForDAD = function (params) {
+// const putColumnOrderForDAD = function (params) {
+//   let pushOrderQuery = `
+//   update todo.columnOrder
+//   set columnOrder.order = columnOrder.order + 1
+//   where col_id = ? and columnOrder.order >= ?;
+//   `;
+//   let switchCardQuery = `
+//   update todo.columnOrder
+//   set columnOrder.order = ?, col_id = ?
+//   where card_id = ?;
+//   `;
+//   let pullOrderQuery = `
+//   update todo.columnOrder
+//   set columnOrder.order = columnOrder.order - 1
+//   where col_id = ? and columnOrder.order > ?;
+//   `;
+//   const pushOrderQueryC = mysql.format(pushOrderQuery, [
+//     params.toColumnId,
+//     params.orderInToColumn,
+//   ]);
+//   const switchCardQueryC = mysql.format(switchCardQuery, [
+//     params.orderInToColumn,
+//     params.toColumnId,
+//     params.cardId,
+//   ]);
+//   const pullOrderQueryC = mysql.format(pullOrderQuery, [
+//     params.fromColumnId,
+//     params.orderInFromColumn,
+//   ]);
+
+//   return pushOrderQueryC + switchCardQueryC + pullOrderQueryC;
+// };
+
+const pushOrder = function (params) {
   let pushOrderQuery = `
   update todo.columnOrder
   set columnOrder.order = columnOrder.order + 1
   where col_id = ? and columnOrder.order >= ?;
   `;
-  let switchCardQuery = `
-  update todo.columnOrder
-  set columnOrder.order = ?, col_id = ?
-  where card_id = ?;
-  `;
-  let pullOrderQuery = `
-  update todo.columnOrder
-  set columnOrder.order = columnOrder.order - 1
-  where col_id = ? and columnOrder.order > ?;
-  `;
   const pushOrderQueryC = mysql.format(pushOrderQuery, [
     params.toColumnId,
     params.orderInToColumn,
   ]);
+
+  return pushOrderQueryC;
+};
+const switchCard = function (params) {
+  let switchCardQuery = `
+    update todo.columnOrder
+    set columnOrder.order = ?, col_id = ?
+    where card_id = ?;
+    `;
   const switchCardQueryC = mysql.format(switchCardQuery, [
     params.orderInToColumn,
     params.toColumnId,
     params.cardId,
   ]);
+
+  return switchCardQueryC;
+};
+const pullOrder = function (params) {
+  let pullOrderQuery = `
+    update todo.columnOrder
+    set columnOrder.order = columnOrder.order - 1
+    where col_id = ? and columnOrder.order > ?;
+    `;
   const pullOrderQueryC = mysql.format(pullOrderQuery, [
     params.fromColumnId,
     params.orderInFromColumn,
   ]);
 
-  return pushOrderQueryC + switchCardQueryC + pullOrderQueryC;
+  return pullOrderQueryC;
 };
 
 const postCard = function (params) {
@@ -82,8 +123,8 @@ const postDeleteActivity = function (params) {
   `;
 
   const insertActivityQueryC = mysql.format(insertActivityQuery, [
-    params.columnId,
-    params.columnId,
+    params.colId,
+    params.colId,
     params.cardId,
   ]);
   return insertActivityQueryC;
@@ -207,7 +248,7 @@ export {
   getAllCard,
   getAllColumn,
   getAllColumnOrder,
-  putColumnOrderForDAD,
+  // putColumnOrderForDAD,
   postCard,
   pushColumnOrder,
   postColumnOrder,
@@ -221,4 +262,7 @@ export {
   postDeleteActivity,
   postAddActivity,
   postUpdateActivity,
+  pushOrder,
+  switchCard,
+  pullOrder,
 };
