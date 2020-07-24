@@ -1,4 +1,4 @@
-import { del } from "../controllers/fetcher.js";
+import { del, post, put } from "../controllers/fetcher.js";
 
 const deleteCard = function (colId, cardId, order) {
   const path = `/card/${cardId}`;
@@ -6,4 +6,17 @@ const deleteCard = function (colId, cardId, order) {
   return del(path, params);
 };
 
-export { deleteCard };
+const addCard = function (writer, note, columnId) {
+  const path = "/card";
+  const params = { writer: writer, note: note, columnId: columnId };
+  return post(path, params);
+};
+
+const editCard = function (cardId, note) {
+  console.log(`/card/${cardId}/note`);
+  const path = `/card/${cardId}/note`;
+  const params = { cardId: cardId, note: note };
+  return put(path, params);
+};
+
+export { deleteCard, addCard, editCard };

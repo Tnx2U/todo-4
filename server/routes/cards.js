@@ -25,8 +25,8 @@ router.delete("/:card_id", async function (req, res, next) {
 
 router.post("/", async function (req, res, next) {
   try {
-    await postCard(req.body);
-    res.status(200).send({ success: true });
+    const result = await postCard(req.body);
+    res.status(200).send(Object.assign(result, { success: true }));
   } catch (error) {
     console.log(error.message);
     res.status(404).send({ success: false });

@@ -3,6 +3,7 @@ import Column from "./components/column/column.js";
 import HiddenMenu from "./components/hiddenMenu/hiddenMenu.js";
 import Data from "./controllers/data.js";
 import DragAndDrop from "./controllers/dragAndDrop.js";
+import CRUD from "./controllers/crud.js";
 
 function render() {
   new Header(document.querySelector(".header"));
@@ -18,6 +19,7 @@ function initialize() {
   Data.initialize().then(() => {
     render();
     DragAndDrop.initialize();
+    new CRUD();
   });
 }
 
