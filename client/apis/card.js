@@ -13,7 +13,8 @@ const addCard = function (writer, note, columnId) {
 };
 
 const editCard = function (cardId, note) {
-  const path = `/card/${cardId}`;
+  console.log(`/card/${cardId}/note`);
+  const path = `/card/${cardId}/note`;
   const params = { cardId: cardId, note: note };
   return put(path, params);
 };

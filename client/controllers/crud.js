@@ -1,5 +1,6 @@
 import RemoveCard from "../components/modal/removeCard.js";
 import EditNote from "../components/modal/editNote.js";
+import EditColumnTitle from "../components/modal/editColumnTitle.js";
 import Data from "./data.js";
 
 export default class CRUD {
@@ -15,6 +16,10 @@ export default class CRUD {
     this.selectedBtnId = null;
     this.addCard = this.addCard.bind(this);
     this.editNote = new EditNote(this.onClickEditNote, this.clearModalLayer);
+    this.editColumnTitle = new EditColumnTitle(
+      this.onClickEditColumnTitle,
+      this.clearModalLayer
+    );
   }
 
   setEventListenerToDeleteBtn() {
@@ -23,6 +28,16 @@ export default class CRUD {
         this.setModalForRemoveCard(e, btn.id)
       );
     });
+  }
+
+  setEventListenerToEditColumnName() {
+    this.columnRootElement
+      .querySelectorAll(".edit_column_title")
+      .forEach((btn) => {
+        btn.addEventListener("click", (e) =>
+          this.setModalForEditColumn(e, btn.id)
+        );
+      });
   }
 
   setEventListenerToEditBtn() {
@@ -101,6 +116,11 @@ export default class CRUD {
     this.renderModalForRemoveCard();
   };
 
+  setModalForEditColumn = (e, id) => {
+    this.selectedBtnId = id;
+    this.setModalLayer();
+  };
+
   setModalForEditCard = (e, id) => {
     this.selectedBtnId = id;
     e.stopPropagation();
@@ -147,6 +167,8 @@ export default class CRUD {
     );
     selectedCardElement.querySelector(".card_note span").innerText = note;
   }
+
+  editColumnTitle(title) {}
   onClickRemoveCard = () => {
     this.removeSelectedCard();
     this.clearModalLayer();
@@ -155,5 +177,9 @@ export default class CRUD {
   onClickEditNote = (note) => {
     this.clearModalLayer();
     this.editSelectedCard(note);
+  };
+
+  onClickEditColumnTitle = (title) => {
+    this.clearModalLayer();
   };
 }

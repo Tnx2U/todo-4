@@ -47,7 +47,8 @@
   box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.24), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
   background-color: #4caf50; /* Green */
 }
-.modal_edit_note {
+.modal_edit_note,
+.modal_edit_column {
   width: 450px;
   background: #fff;
   border: 2px solid #666;
@@ -98,4 +99,17 @@
 
 .btn_confirm:disabled {
   background-color: #94d3a2;
+}
+
+.edit_column_title {
+  width: 100%;
+  display: block;
+  resize: vertical;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  line-height: 1.5;
+  box-sizing: border-box;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  margin-bottom: 8px;
 }

@@ -74,13 +74,12 @@ export default class Data {
   }
 
   static async editCard(colId, cardId, note) {
-    console.log(note);
     await editCard(cardId, note)
       .then((response) => response.json())
       .then((response) => {
         console.log(response.success);
       });
-    const columnIndex = this.getColumnOrderByColumId(columnId);
+    const columnIndex = this.getColumnOrderByColumId(colId);
     const cardIndex = this.getOrderInColumnByCardId(colId, cardId);
     this.columnData[columnIndex].cards[cardIndex].note = note;
   }

@@ -14,10 +14,11 @@ export default class Column {
     this.parentDom.insertAdjacentHTML(
       "beforeend",
       `<div class="column" id="column_${this.colId}">
-    <div class="column_header">
-        <button class="btn float_right">
-          <img src="/public/images/more.svg" />
+        <div class="column_header">
+         <button class="btn float_right" id="btn_${this.colId}">
+          <img src="/public/images/edit.svg" />
         </button>
+
         <button class="btn float_right add_card_btn">
           <img src="/public/images/add.svg" />
         </button>
