@@ -10,6 +10,7 @@ export default class CRUD {
     this.setEventListenerToAddCard();
     this.setEventListenerToEditBtn();
     this.setEventListenerToEditColumnName();
+    this.setEventListenerToOpenMenu();
     this.removeCard = new RemoveCard(
       this.onClickRemoveCard,
       this.clearModalLayer
@@ -22,7 +23,16 @@ export default class CRUD {
       this.clearModalLayer
     );
   }
-
+  setEventListenerToOpenMenu() {
+    document.querySelector(".btn_menu").addEventListener("click", (e) => {
+      document.querySelector(".menu_wrap").classList.remove("hidden");
+      this.setModalLayer(e);
+    });
+    document.querySelector("#btn_close_menu").addEventListener("click", (e) => {
+      document.querySelector(".menu_wrap").classList.add("hidden");
+      this.clearModalLayer(e);
+    });
+  }
   setEventListenerToDeleteBtn() {
     this.columnRootElement.querySelectorAll(".rem_card").forEach((btn) => {
       btn.addEventListener("click", (e) =>

@@ -114,6 +114,7 @@
   width: 360px;
   background-color: #fff;
   box-shadow: -3px 0 5px rgba(36, 41, 46, 0.05);
+  z-index: 20;
 }
 
 .menu_header,
