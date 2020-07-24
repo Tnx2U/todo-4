@@ -15,7 +15,7 @@ export default class Column {
       "beforeend",
       `<div class="column" id="column_${this.colId}">
         <div class="column_header">
-         <button class="btn float_right" id="btn_${this.colId}">
+         <button class="btn float_right btn_edit_column_title" id="btn_${this.colId}">
           <img src="/public/images/edit.svg" />
         </button>
 

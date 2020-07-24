@@ -1,7 +1,7 @@
 import getInitialData from "../apis/initialize.js";
 import { updateCardOrder } from "../apis/columnOrder.js";
 import { deleteCard, addCard, editCard } from "../apis/card.js";
-
+import { editColumnTitle } from "../apis/column.js";
 // activity 더미 데이터
 const dummyActData = [
   {
@@ -72,7 +72,15 @@ export default class Data {
     });
     return cardId;
   }
-
+  static async editColumnTitle(colId, title) {
+    await editColumnTitle(colId, title)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response.success);
+      });
+    const columnIndex = this.getColumnOrderByColumId(colId);
+    this.columnData[columnIndex].title = title;
+  }
   static async editCard(colId, cardId, note) {
     await editCard(cardId, note)
       .then((response) => response.json())

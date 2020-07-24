@@ -9,6 +9,7 @@ export default class CRUD {
     this.setEventListenerToDeleteBtn();
     this.setEventListenerToAddCard();
     this.setEventListenerToEditBtn();
+    this.setEventListenerToEditColumnName();
     this.removeCard = new RemoveCard(
       this.onClickRemoveCard,
       this.clearModalLayer
@@ -32,7 +33,7 @@ export default class CRUD {
 
   setEventListenerToEditColumnName() {
     this.columnRootElement
-      .querySelectorAll(".edit_column_title")
+      .querySelectorAll(".btn_edit_column_title")
       .forEach((btn) => {
         btn.addEventListener("click", (e) =>
           this.setModalForEditColumn(e, btn.id)
@@ -117,8 +118,12 @@ export default class CRUD {
   };
 
   setModalForEditColumn = (e, id) => {
-    this.selectedBtnId = id;
+    const columnEl = e.target.closest(".column");
+    this.selectedColumnId = columnEl.id;
+    const columnTitle = columnEl.querySelector(".title_column").innerText;
+    this.editColumnTitle.setTitle(columnTitle);
     this.setModalLayer();
+    this.renderModalForEditColumnTitle();
   };
 
   setModalForEditCard = (e, id) => {
@@ -137,6 +142,10 @@ export default class CRUD {
 
   renderModalForEditCard() {
     this.editNote.open();
+  }
+
+  renderModalForEditColumnTitle() {
+    this.editColumnTitle.open();
   }
 
   setModalLayer() {
@@ -168,7 +177,15 @@ export default class CRUD {
     selectedCardElement.querySelector(".card_note span").innerText = note;
   }
 
-  editColumnTitle(title) {}
+  editSelectedColumnTitle(title) {
+    const columnId = this.selectedColumnId.split("_")[1] - 0;
+    Data.editColumnTitle(columnId, title);
+    const selectedColumnTitle = document.querySelector(
+      `#column_${columnId} .title_column`
+    );
+    selectedColumnTitle.innerText = title;
+  }
+
   onClickRemoveCard = () => {
     this.removeSelectedCard();
     this.clearModalLayer();
@@ -181,5 +198,6 @@ export default class CRUD {
 
   onClickEditColumnTitle = (title) => {
     this.clearModalLayer();
+    this.editSelectedColumnTitle(title);
   };
 }
