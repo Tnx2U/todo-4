@@ -35,9 +35,7 @@ export default class CRUD {
   }
   setEventListenerToDeleteBtn() {
     this.columnRootElement.querySelectorAll(".rem_card").forEach((btn) => {
-      btn.addEventListener("click", (e) =>
-        this.setModalForRemoveCard(e, btn.id)
-      );
+      btn.addEventListener("click", (e) => this.setModalForRemoveCard(e));
     });
   }
 
@@ -74,7 +72,7 @@ export default class CRUD {
     this.columnRootElement
       .querySelectorAll(".add_card_btn_confirm")
       .forEach((btn) => {
-        btn.addEventListener("click", this.addCard);
+        btn.addEventListener("click", this.addCard.bind(this));
       });
   }
 
@@ -120,10 +118,17 @@ export default class CRUD {
     </div>
   `
     );
+    const rem_card = document.querySelector(
+      `#card_${colId}_${cardId} .rem_card`
+    );
+    const edit_card = document.querySelector(
+      `#card_${colId}_${cardId} .edit_card`
+    );
+    edit_card.addEventListener("click", this.setModalForEditCard);
+    rem_card.addEventListener("click", this.setModalForRemoveCard);
     e.target.closest(".column").classList.remove("on_add_card");
   }
-
-  setModalForRemoveCard = (e, id) => {
+  setModalForRemoveCard = (e) => {
     this.selectedBtnId = e.target.closest(".card_wrap").id;
     e.stopPropagation();
     this.setModalLayer(e);
@@ -184,7 +189,6 @@ export default class CRUD {
     const columnId = splitedBtnId[1] - 0;
     const cardId = splitedBtnId[2] - 0;
     Data.editCard(columnId, cardId, note);
-    console.log(`#card_${columnId}_${cardId}`);
     const selectedCardElement = document.querySelector(
       `#card_${columnId}_${cardId}`
     );
