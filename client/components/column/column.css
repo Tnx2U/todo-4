@@ -1,0 +1,11 @@
+.column_cards {
+  overflow-y: auto;
+}
+
+.column {
+  overflow-y: auto;
+}
+
+.column_wrap {
+  overflow-y: auto;
+}

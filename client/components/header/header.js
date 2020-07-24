@@ -9,7 +9,7 @@ export default class Header {
 
   render() {
     this.parentDom.innerHTML = `<div class="header_container">
-    <button class="btn_menu" onclick="">menu</button>
+    <button class="btn_menu">menu</button>
       <h1 class="header_title">TODO 서비스</h1>
     </div>`;
   }
