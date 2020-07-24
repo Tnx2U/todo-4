@@ -34,4 +34,4 @@
 - [기능 명세서]([https://github.com/woowa-techcamp-2020/todo-4/wiki/%EA%B8%B0%EB%8A%A5-%EB%AA%85%EC%84%B8%EC%84%9C-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85](https://github.com/woowa-techcamp-2020/todo-4/wiki/기능-명세서-프로토타입))
 - [구현 명세서]([https://github.com/woowa-techcamp-2020/todo-4/wiki/FE-%EA%B5%AC%ED%98%84-%EB%AA%85%EC%84%B8%EC%84%9C(%EA%B9%83%ED%97%99-%EC%9D%B4%EC%8A%88-%EB%A6%AC%EC%8A%A4%ED%8A%B8)](https://github.com/woowa-techcamp-2020/todo-4/wiki/FE-구현-명세서(깃헙-이슈-리스트))
 - [ERD]([https://github.com/woowa-techcamp-2020/todo-4/wiki/DB%EC%84%A4%EA%B3%84(ERD)](https://github.com/woowa-techcamp-2020/todo-4/wiki/DB설계(ERD))
-- [API 명세서](
+- [API 명세서]([https://github.com/woowa-techcamp-2020/todo-4/wiki/API-%EB%AA%85%EC%84%B8%EC%84%9C](https://github.com/woowa-techcamp-2020/todo-4/wiki/API-명세서))
