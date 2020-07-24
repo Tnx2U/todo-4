@@ -52,7 +52,6 @@ export default class Data {
     await getInitialData()
       .then((response) => response.json())
       .then((response) => {
-        console.log(response.data);
         this.setColumnData(response.data);
       });
     await getAllActivity()

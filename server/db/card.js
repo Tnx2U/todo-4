@@ -12,10 +12,9 @@ import {
 } from "./query";
 
 function queryPostCard(params) {
-  excute(postAddActivity(params))
-  .catch((error) => {
+  excute(postAddActivity(params)).catch((error) => {
     console.log(error);
-  })
+  });
   const pushFromOrder = 1;
   //카드 row 추가
   return excute(postCard(params)).then((result) => {
@@ -29,6 +28,7 @@ function queryPostCard(params) {
         return { cardId: params.insertId };
       });
     });
+  });
 }
 
 function queryPutCard(params) {
