@@ -6,7 +6,6 @@ export default class HiddenMenu {
     this.parentDom = parentDom;
     this.data = Data.getActivityData();
     this.render();
-    console.log("activity in hiddenmenu : ", this.data);
   }
 
   render() {
@@ -25,8 +24,8 @@ export default class HiddenMenu {
       <img src="/public/images/noti.svg" />
       <h3 class="menu_title">Activity</h3>
     </div>
-    <ul class="activity_content">
-    </ul>
+    <div class="activity_content">
+    </div>
     `;
     for (let index = 0; index < this.data.length; index++) {
       new Activity(

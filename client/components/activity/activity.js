@@ -2,6 +2,8 @@ export default class Activity {
   constructor(parentDom, data) {
     this.parentDom = parentDom;
     this.data = data;
+    this.timeDiff;
+    this.timeType;
     this.render();
   }
 
@@ -21,9 +23,9 @@ export default class Activity {
     <div class="act_user">@${this.data.userName}</div>
     <div class="act_type">${this.data.actionType}</div>
     <div class="act_cardId">${this.data.cardNote}</div>
-    <span> from </span>
+    <div> from </div>
     <div class="act_columnId">${this.data.fromColumnTitle}</div>
-    <span> to </span>
+    <div> to </div>
     <div class="act_columnId">${this.data.toColumnTitle}</div>
     `;
     return messageSrc;
@@ -49,7 +51,7 @@ export default class Activity {
     return messageSrc;
   }
 
-  render() {
+  setTimeDiff() {
     var parseTime = this.data.actionTime.split(/[- . T :]/);
     var actionTime = new Date(
       Date.UTC(
@@ -63,29 +65,27 @@ export default class Activity {
     );
 
     const nowTime = new Date();
-    // let timeDiff = (new Date().getTime() - actionTime.getTime()) / 10000;
-    console.log(
-      actionTime.getMonth(),
-      actionTime.getDate(),
-      actionTime.getHours(),
-      actionTime.getMinutes()
-    );
-    let timeType;
-    let timeDiff;
+    const timeZoneDiff = 32412;
+    this.timeDiff =
+      Math.round((nowTime.getTime() - actionTime.getTime()) / 1000) -
+      timeZoneDiff;
 
-    if (nowTime.getDate() - actionTime.getDate() > 0) {
-      timeDiff = nowTime.getDate() - actionTime.getDate();
-      timeType = "days";
-    } else if (nowTime.getHours() - actionTime.getDate() > 0) {
-      timeDiff = nowTime.getHours() - actionTime.getHours();
-      timeType = "hours";
-    } else if (nowTime.getMinutes() - actionTime.getMinutes() > 0) {
-      timeDiff = nowTime.getMinutes() - actionTime.getMinutes();
-      timeType = "minutes";
+    if (this.timeDiff > 60 * 60 * 24) {
+      this.timeDiff = Math.round(this.timeDiff / (60 * 60 * 24));
+      this.timeType = "days";
+    } else if (this.timeDiff > 60 * 60) {
+      this.timeDiff = Math.round(this.timeDiff / (60 * 60));
+      this.timeType = "hours";
+    } else if (this.timeDiff > 60) {
+      this.timeDiff = Math.round(this.timeDiff / 60);
+      this.timeType = "minutes";
     } else {
-      timeDiff = nowTime.getSeconds() - actionTime.getSeconds();
-      timeType = "seconds";
+      this.timeType = "seconds";
     }
+  }
+
+  render() {
+    this.setTimeDiff();
 
     let messageSrc;
 
@@ -106,17 +106,17 @@ export default class Activity {
 
     this.parentDom.innerHTML +=
       `
-        <div class="activity_card">
-            <div>
-                <img class="img_user"/>
-            </div>
-            <div class="act_content">
-                <div class="message">` +
+  <div class="activity_card">
+      <div>
+          <img class="img_user"/>
+      </div>
+      <div class="act_content">
+          <div class="message">` +
       messageSrc +
       `</div>
-                <div class="update_time">${timeDiff} ${timeType} ago</div>
-            </div>
-        </div>
+          <div class="update_time">${this.timeDiff} ${this.timeType} ago</div>
+      </div>
+  </div>
     `;
   }
 }

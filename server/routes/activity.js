@@ -5,7 +5,6 @@ import { getAllActivity, postActivity } from "../apis/activity";
 router.get("/", async function (req, res, next) {
   try {
     const activities = await getAllActivity();
-    console.log("query result : ", activities);
     res.status(200).send({ success: true, data: activities });
   } catch (error) {
     console.log(error.message);
