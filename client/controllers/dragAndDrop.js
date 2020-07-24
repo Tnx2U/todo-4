@@ -11,8 +11,8 @@ export default class DragAndDrop {
   }
 
   static onMouseDown = (e) => {
-    this.setDraggedCard(e);
     if (this.clickOtherElement(e)) return;
+    this.setDraggedCard(e);
     if (!this.isCardDragged()) return;
     this.setEnteredColumn(e);
     this.setCapturedCard();
@@ -23,7 +23,7 @@ export default class DragAndDrop {
   };
 
   static clickOtherElement(e) {
-    return e.target.closest(".btn") !== null;
+    return e.target.closest("button") !== null;
   }
 
   static setDraggedCard(e) {
@@ -181,7 +181,7 @@ export default class DragAndDrop {
 
   static setEnteredCard(e) {
     let enteredCard = e.target.closest(".card_wrap");
-    if (!enteredCard || enteredCard.classList.contains("dummy")) {
+    if (!enteredCard) {
       enteredCard = null;
     }
     this.enteredCard = enteredCard;

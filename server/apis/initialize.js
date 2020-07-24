@@ -39,7 +39,6 @@ async function getInitialData() {
       }
       break;
     }
-
     if (result[index].colId !== colId) {
       //컬럼 push
       initialData.push({
@@ -57,7 +56,6 @@ async function getInitialData() {
       writer: result[index].writer,
     });
   }
-
   return initialData;
 }
 

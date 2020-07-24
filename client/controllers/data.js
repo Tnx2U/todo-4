@@ -1,6 +1,8 @@
 import getInitialData from "../apis/initialize.js";
 import getAllActivity from "../apis/activity.js";
 import { updateCardOrder } from "../apis/columnOrder.js";
+import { deleteCard, addCard, editCard } from "../apis/card.js";
+
 // activity 더미 데이터
 const dummyActData = [
   {
@@ -44,11 +46,13 @@ const dummyActData = [
 export default class Data {
   static columnData = null;
   static activityData = null;
+  static user = "woowa";
 
   static async initialize() {
     await getInitialData()
       .then((response) => response.json())
       .then((response) => {
+        console.log(response.data);
         this.setColumnData(response.data);
       });
     await getAllActivity()
@@ -57,25 +61,62 @@ export default class Data {
         this.setActivityData(response.data);
       });
   }
-  static updateCardOrder(
-    //static async updateCardOrder(
+
+  static async addCard(note, columnId) {
+    const writer = this.user;
+    const cardId = await addCard(writer, note, columnId)
+      .then((response) => response.json())
+      .then((response) => {
+        return response.cardId;
+      });
+    const columnIndex = this.getColumnOrderByColumId(columnId);
+    this.columnData[columnIndex].cards.splice(0, 0, {
+      cardId: cardId,
+      note: note,
+      writer: this.user,
+    });
+    return cardId;
+  }
+
+  static async editCard(colId, cardId, note) {
+    await editCard(cardId, note)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response.success);
+      });
+    const columnIndex = this.getColumnOrderByColumId(colId);
+    const cardIndex = this.getOrderInColumnByCardId(colId, cardId);
+    this.columnData[columnIndex].cards[cardIndex].note = note;
+  }
+
+  static async removeCard(colId, cardId, order) {
+    await deleteCard(colId, cardId, order)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response.success);
+      });
+    const columnIndex = this.getColumnOrderByColumId(colId);
+    this.columnData[columnIndex].cards.splice(order, 1);
+  }
+
+  static async updateCardOrder(
     fromColumnId,
     toColumnId,
     orderInFromColumn,
     orderInToColumn,
     cardId
   ) {
-    // await updateCardOrder(
-    //   fromColumnId,
-    //   toColumnId,
-    //   orderInFromColumn,
-    //   orderInToColumn,
-    //   cardId
-    // )
-    //   .then((response) => response.json())
-    //   .then((response) => {
-    //     console.log(response.sucess);
-    //   });
+    await updateCardOrder(
+      fromColumnId,
+      toColumnId,
+      orderInFromColumn + 1,
+      orderInToColumn + 1,
+      cardId
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response.success);
+      });
     const fromColumnOrder = this.getColumnOrderByColumId(fromColumnId);
     const toColumnOrder = this.getColumnOrderByColumId(toColumnId);
     const fromCardData = this.columnData[fromColumnOrder].cards.splice(

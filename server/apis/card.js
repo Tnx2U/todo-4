@@ -2,6 +2,7 @@ import { queryPostCard, queryPutCard, queryDeleteCard } from "../db/card.js";
 
 async function postCard(params) {
   const result = await queryPostCard(params);
+  return result;
 }
 
 async function putCard(params) {
