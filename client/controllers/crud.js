@@ -110,7 +110,10 @@ export default class CRUD {
         <button class="rem_card" id="btn_rem_${colId}_${cardId}">
           <img src="/public/images/close.svg" />
         </button>
-    </div>
+        <button class="edit_card" id="btn_edit_${this.colId}_${this.cardId}">
+          <img src="/public/images/edit.svg" />
+        </button>
+      </div>
     <div class="card_bottom">
         <span class="add_by">Added by</span>
         <span class="span_writer">${Data.user}</span>
@@ -121,7 +124,7 @@ export default class CRUD {
   }
 
   setModalForRemoveCard = (e, id) => {
-    this.selectedBtnId = id;
+    this.selectedBtnId = e.target.closest(".card_wrap").id;
     e.stopPropagation();
     this.setModalLayer(e);
     this.renderModalForRemoveCard();
@@ -137,7 +140,7 @@ export default class CRUD {
   };
 
   setModalForEditCard = (e, id) => {
-    this.selectedBtnId = id;
+    this.selectedBtnId = e.target.closest(".card_wrap").id;
     e.stopPropagation();
     this.setModalLayer();
     const cardEl = e.target.closest(".card_wrap");
@@ -167,8 +170,8 @@ export default class CRUD {
   };
   removeSelectedCard() {
     const splitedBtnId = this.selectedBtnId.split("_");
-    const columnId = splitedBtnId[2] - 0;
-    const cardId = splitedBtnId[3] - 0;
+    const columnId = splitedBtnId[1] - 0;
+    const cardId = splitedBtnId[2] - 0;
     const order = Data.getOrderInColumnByCardId(columnId, cardId);
     Data.removeCard(columnId, cardId, order);
     const selectedCardElement = document.querySelector(
@@ -178,9 +181,10 @@ export default class CRUD {
   }
   editSelectedCard(note) {
     const splitedBtnId = this.selectedBtnId.split("_");
-    const columnId = splitedBtnId[2] - 0;
-    const cardId = splitedBtnId[3] - 0;
+    const columnId = splitedBtnId[1] - 0;
+    const cardId = splitedBtnId[2] - 0;
     Data.editCard(columnId, cardId, note);
+    console.log(`#card_${columnId}_${cardId}`);
     const selectedCardElement = document.querySelector(
       `#card_${columnId}_${cardId}`
     );
