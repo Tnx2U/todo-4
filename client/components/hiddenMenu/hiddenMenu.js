@@ -15,7 +15,7 @@ export default class HiddenMenu {
       <img src="/public/images/menu.svg" />
     </button>
     <h3 class="menu_title">Menu</h3>
-    <button class="btn flex_right">
+    <button class="btn flex_right" id="btn_close_menu">
       <img src="/public/images/close.svg" />
     </button>
   </div>
